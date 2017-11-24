@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Head from 'next/head'
 import {inject, observer} from 'mobx-react';
 import ajax from '../util/ajaxUtil';
+import {Button} from 'antd';
 
 @inject('blog') @observer
 class Index extends React.Component {
@@ -17,6 +18,7 @@ class Index extends React.Component {
           <title>quick start for next.js and mobx</title>
         </Head>
         <Link href='/todo'>todo page....</Link>
+        <Button>test button</Button>
       </div>
     )
   }

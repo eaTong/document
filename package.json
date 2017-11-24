@@ -5,7 +5,9 @@
     "start": "NODE_ENV=production node index"
   },
   "dependencies": {
+    "antd": "^2.13.10",
     "axios": "^0.17.1",
+    "babel-plugin-import": "^1.6.2",
     "compression": "^1.7.1",
     "get-form-data": "^1.2.5",
     "koa": "^2.4.1",
