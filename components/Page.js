@@ -5,8 +5,6 @@ import Loading from './Loading';
 import {parse} from 'query-string';
 import Head from 'next/head'
 import '../util/prototypes';
-import stylesheet from 'antd/dist/antd.less'
-
 export default Component => class Page extends React.Component {
   constructor(props) {
     super(props);
@@ -55,7 +53,6 @@ export default Component => class Page extends React.Component {
         <div className="layout-default">
           <Loading/>
           <Head>
-            <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
             <title>eaTong write a blog with Next.js</title>
             <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport"/>
           </Head>

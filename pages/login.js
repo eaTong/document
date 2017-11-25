@@ -6,7 +6,7 @@ import {Page} from '../components';
 import {inject, observer} from 'mobx-react';
 import getFormData from 'get-form-data';
 import ajax from '../util/ajaxUtil';
-
+import {Input} from 'antd';
 
 @inject('user') @observer
 class Login extends Component {
