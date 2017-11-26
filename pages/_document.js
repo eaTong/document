@@ -2,7 +2,7 @@
  * Created by eatong on 17-11-24.
  */
 import Document, {Head, Main, NextScript} from 'next/document';
-import stylesheet from '../styles/test.less'
+import stylesheet from '../styles/test.scss'
 
 
 export default class MyDocument extends Document {
@@ -14,8 +14,7 @@ export default class MyDocument extends Document {
           ? <link
             rel="stylesheet"
             type="text/css"
-            href={`/static/styles/app.css?${this.props.__NEXT_DATA__
-              .buildStats['app.js'].hash}`}
+            href={`/_next/${this.props.__NEXT_DATA__.buildStats['app.js'].hash}/app.css`}
           />
           : <style
             global
