@@ -15,36 +15,55 @@ module.exports = {
     });
 
     if (!dev) {
+      const preLoader = [
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 2,
+            modules: false,
+            url: true,
+            sourceMap: false,
+            minimize: true,
+            localIdentName: false ? '[name]-[local]-[hash:base64:5]' : '[hash:base64:5]',
+          },
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true,
+            plugins: () => [
+              autoprefixer(),
+            ],
+          },
+        }];
       config.module.rules.push({
-        test: /\.scss$/,
+        test: /\.s[ac]ss$/,
         use: ExtractTextPlugin.extract({
           use: [
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 2,
-                modules: false,
-                url: true,
-                sourceMap: false,
-                minimize: true,
-                localIdentName: false? '[name]-[local]-[hash:base64:5]': '[hash:base64:5]',
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-                plugins: () => [
-                  autoprefixer(),
-                ],
-              },
-            },
+            ...preLoader,
             {
               loader: 'sass-loader',
               options: {
                 sourceMap: true,
                 includePaths: [
-                  path.resolve(__dirname, 'scss'),
+                  path.resolve(__dirname, 'styles'),
+                  path.resolve(__dirname, 'pages'),
+                ],
+              },
+            },
+          ],
+        }),
+      },{
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          use: [
+            ...preLoader,
+            {
+              loader: 'less-loader',
+              options: {
+                sourceMap: true,
+                includePaths: [
+                  path.resolve(__dirname, 'styles'),
                   path.resolve(__dirname, 'pages'),
                 ],
               },
@@ -53,12 +72,12 @@ module.exports = {
         }),
       });
 
-      config.plugins.push(new ExtractTextPlugin('app.css'));
+      config.plugins.push(new ExtractTextPlugin('/static/app.css'));
     } else {
       config.module.rules.push({
         test: /\.scss$/,
         use: [
-          { loader: 'raw-loader' },
+          {loader: 'raw-loader'},
           {
             loader: 'postcss-loader',
             options: {
@@ -70,7 +89,7 @@ module.exports = {
           },
           {
             loader: 'sass-loader',
-            options: { sourceMap: true },
+            options: {sourceMap: true},
           },
         ],
       });

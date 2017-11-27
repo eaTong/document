@@ -12,7 +12,7 @@ import {createLogger, transports} from 'winston';
 import router from './routers';
 import {connection} from './mongoConfig';
 import staticCache from 'koa-static-cache';
-
+import serve from 'koa-static';
 
 const port = parseInt(process.env.PORT, 10) || 8080;
 const dev = process.env.NODE_ENV !== 'production';
@@ -35,13 +35,20 @@ nextApp.prepare().then(() => {
   app.use(koaConnect(compression()));
   // app.use(koaLogger());
   app.use(cookie());
+  app.use(serve('.next/static'), {
+    maxAge: 365 * 24 * 60 * 60,
+    gzip:true
+  });
+  app.use(staticCache(path.join(__dirname, 'static'), {
+    maxAge: 365 * 24 * 60 * 60
+  }));
 //define mongo session storage...
-  app.use(session({
+/*  app.use(session({
     name: 'eaTong-session-id',
     signed: true,
     overwrite: true,
     store: mongoStore.create({mongoose: connection})
-  }));
+  }));*/
   app.keys = ['key for eaTong'];
   //inject logger to ctx
   app.use(async (ctx, next) => {
@@ -52,9 +59,6 @@ nextApp.prepare().then(() => {
   //use koaBody to resolve data
   app.use(koaBody({multipart: true}));
 
-  app.use(staticCache(path.join(__dirname, 'static'), {
-    maxAge: 365 * 24 * 60 * 60
-  }));
 //all routes just all API
   app.use(router.routes());
 
