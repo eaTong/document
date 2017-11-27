@@ -2,7 +2,7 @@
  * Created by eatong on 17-11-24.
  */
 import Document, {Head, Main, NextScript} from 'next/document';
-import stylesheet from '../styles/test.sass'
+import stylesheet from '../styles/test.scss'
 
 
 export default class MyDocument extends Document {

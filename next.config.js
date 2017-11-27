@@ -15,55 +15,36 @@ module.exports = {
     });
 
     if (!dev) {
-      const preLoader = [
-        {
-          loader: 'css-loader',
-          options: {
-            importLoaders: 2,
-            modules: false,
-            url: true,
-            sourceMap: false,
-            minimize: true,
-            localIdentName: false ? '[name]-[local]-[hash:base64:5]' : '[hash:base64:5]',
-          },
-        },
-        {
-          loader: 'postcss-loader',
-          options: {
-            sourceMap: true,
-            plugins: () => [
-              autoprefixer(),
-            ],
-          },
-        }];
       config.module.rules.push({
-        test: /\.s[ac]ss$/,
+        test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [
-            ...preLoader,
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 2,
+                modules: false,
+                url: true,
+                sourceMap: false,
+                minimize: true,
+                localIdentName: false? '[name]-[local]-[hash:base64:5]': '[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                plugins: () => [
+                  autoprefixer(),
+                ],
+              },
+            },
             {
               loader: 'sass-loader',
               options: {
                 sourceMap: true,
                 includePaths: [
-                  path.resolve(__dirname, 'styles'),
-                  path.resolve(__dirname, 'pages'),
-                ],
-              },
-            },
-          ],
-        }),
-      },{
-        test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            ...preLoader,
-            {
-              loader: 'less-loader',
-              options: {
-                sourceMap: true,
-                includePaths: [
-                  path.resolve(__dirname, 'styles'),
+                  path.resolve(__dirname, 'scss'),
                   path.resolve(__dirname, 'pages'),
                 ],
               },
@@ -77,7 +58,7 @@ module.exports = {
       config.module.rules.push({
         test: /\.scss$/,
         use: [
-          {loader: 'raw-loader'},
+          { loader: 'raw-loader' },
           {
             loader: 'postcss-loader',
             options: {
@@ -89,7 +70,7 @@ module.exports = {
           },
           {
             loader: 'sass-loader',
-            options: {sourceMap: true},
+            options: { sourceMap: true },
           },
         ],
       });
