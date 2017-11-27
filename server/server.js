@@ -1,84 +1,117 @@
-import path from 'path';
-import next from 'next';
-import {useStaticRendering} from 'mobx-react';
-import Koa from 'koa';
-import koaBody from 'koa-body';
-import koaConnect from 'koa-connect';
-import compression from 'compression';
-import cookie from 'koa-cookie';
-import session from 'koa-session-store';
-import mongoStore from 'koa-session-mongo';
-import {createLogger, transports} from 'winston';
-import router from './routers';
-import {connection} from './mongoConfig';
-import staticCache from 'koa-static-cache';
-import serve from 'koa-static';
+const path = require('path');
+const glob = require('glob');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
-const port = parseInt(process.env.PORT, 10) || 8080;
-const dev = process.env.NODE_ENV !== 'production';
-const nextApp = next({dev});
-const handle = nextApp.getRequestHandler();
-//define logger
-const logger = createLogger({
-  level: 'info',
-  transports: dev ? undefined : [
-    new transports.File({filename: 'error.log', level: 'error'}),
-    new transports.File({filename: 'combined.log'})
-  ]
-});
 
-useStaticRendering(true);
+module.exports = {
+  webpack: (config, {dev}) => {
+    config.module.rules.push({
+      test: /(\.s[ac]ss$)|(\.css$)|(\.less$)/,
+      loader: 'emit-file-loader',
+      options: {
+        name: 'dist/[path][name].[ext]',
+      },
+    });
 
-nextApp.prepare().then(() => {
-  const app = new Koa();
-//use compression
-  app.use(koaConnect(compression()));
-  // app.use(koaLogger());
-  app.use(cookie());
-  app.use(serve('.next/static'), {
-    maxAge: 365 * 24 * 60 * 60,
-    gzip:true
-  });
-  app.use(staticCache(path.join(__dirname, 'static'), {
-    maxAge: 365 * 24 * 60 * 60
-  }));
-//define mongo session storage...
-  app.use(session({
-    name: 'eaTong-session-id',
-    signed: true,
-    overwrite: true,
-    store: mongoStore.create({mongoose: connection})
-  }));
-  app.keys = ['key for eaTong'];
-  //inject logger to ctx
-  app.use(async (ctx, next) => {
-    ctx.logger = logger;
-    await next();
-  });
+    if (!dev) {
+      const preLoader = [{
+        loader: 'css-loader',
+        options: {
+          importLoaders: 2,
+          modules: false,
+          url: true,
+          sourceMap: false,
+          minimize: true,
+          localIdentName: false ? '[name]-[local]-[hash:base64:5]' : '[hash:base64:5]',
+        },
+      },
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true,
+            plugins: () => [
+              autoprefixer(),
+            ],
+          },
+        }];
+      config.module.rules.push({
+        test: /\.s[ac]ss$/,
+        use: ExtractTextPlugin.extract({
+          use: [
+            ...preLoader,
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+                includePaths: [
+                  path.resolve(__dirname, 'scss'),
+                  path.resolve(__dirname, 'pages'),
+                ],
+              },
+            },
+          ],
+        }),
+      },{
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          use: [
+            ...preLoader,
+            {
+              loader: 'less-loader',
+              options: {
+                sourceMap: true,
+                includePaths: [
+                  path.resolve(__dirname, 'scss'),
+                  path.resolve(__dirname, 'pages'),
+                ],
+              },
+            },
+          ],
+        }),
+      });
 
-  //use koaBody to resolve data
-  app.use(koaBody({multipart: true}));
-
-//all routes just all API
-  app.use(router.routes());
-
-  // /admin pages need to check login
-  router.get('/admin*', async (ctx, next) => {
-    if (!ctx.session.loginUser) {
-      ctx.redirect('/login');
+      config.plugins.push(new ExtractTextPlugin('/static/app.css'));
     } else {
-      await next();
+      config.module.rules.push({
+        test: /\.s[ac]ss$/,
+        use: [
+          {loader: 'raw-loader'},
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: 'inline',
+              plugins: () => [
+                autoprefixer(),
+              ],
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {sourceMap: true},
+          },
+        ],
+      },{
+        test: /\.less$/,
+        use: [
+          {loader: 'raw-loader'},
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: 'inline',
+              plugins: () => [
+                autoprefixer(),
+              ],
+            },
+          },
+          {
+            loader: 'less-loader',
+            options: {sourceMap: true},
+          },
+        ],
+      });
     }
-  });
 
-  //next handle all router
-  router.get('*', async ctx => {
-    await handle(ctx.req, ctx.res);
-    ctx.respond = false
-  });
-
-  app.listen(port, (err) => {
-    if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`)
-  });
-});
+    return config
+  }
+};
