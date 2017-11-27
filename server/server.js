@@ -43,12 +43,12 @@ nextApp.prepare().then(() => {
     maxAge: 365 * 24 * 60 * 60
   }));
 //define mongo session storage...
-/*  app.use(session({
+  app.use(session({
     name: 'eaTong-session-id',
     signed: true,
     overwrite: true,
     store: mongoStore.create({mongoose: connection})
-  }));*/
+  }));
   app.keys = ['key for eaTong'];
   //inject logger to ctx
   app.use(async (ctx, next) => {
