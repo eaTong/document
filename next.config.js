@@ -15,27 +15,32 @@ module.exports = {
     });
 
     if (!dev) {
-      const preLoader = [{
-        loader: 'css-loader',
-        options: {
-          importLoaders: 2,
-          modules: false,
-          url: true,
-          sourceMap: false,
-          minimize: true,
-          localIdentName: false ? '[name]-[local]-[hash:base64:5]' : '[hash:base64:5]',
-        },
-      },
+      const preLoader = [
         {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 2,
+            modules: false,
+            url: true,
+            sourceMap: false,
+            minimize: true,
+            localIdentName: false ? '[name]-[local]-[hash:base64:5]' : '[hash:base64:5]',
+          },
+        }, {
           loader: 'postcss-loader',
           options: {
-            sourceMap: true,
+            sourceMap: false,
             plugins: () => [
               autoprefixer(),
             ],
           },
         }];
       config.module.rules.push({
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          use: preLoader
+        })
+      }, {
         test: /\.s[ac]ss$/,
         use: ExtractTextPlugin.extract({
           use: [
@@ -43,7 +48,7 @@ module.exports = {
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: true,
+                sourceMap: false,
                 includePaths: [
                   path.resolve(__dirname, 'scss'),
                   path.resolve(__dirname, 'pages'),
@@ -52,7 +57,7 @@ module.exports = {
             },
           ],
         }),
-      },{
+      }, {
         test: /\.less$/,
         use: ExtractTextPlugin.extract({
           use: [
@@ -74,7 +79,20 @@ module.exports = {
       config.plugins.push(new ExtractTextPlugin('/static/app.css'));
     } else {
       config.module.rules.push({
-        test: /\.scss$/,
+        test: /\.css$/,
+        use: [
+          {loader: 'raw-loader'},
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: 'inline',
+              plugins: () => [
+                autoprefixer(),
+              ],
+            }
+          }]
+      }, {
+        test: /\.s[ac]ss$/,
         use: [
           {loader: 'raw-loader'},
           {
@@ -91,9 +109,26 @@ module.exports = {
             options: {sourceMap: true},
           },
         ],
+      }, {
+        test: /\.less$/,
+        use: [
+          {loader: 'raw-loader'},
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: 'inline',
+              plugins: () => [
+                autoprefixer(),
+              ],
+            },
+          },
+          {
+            loader: 'less-loader',
+            options: {sourceMap: true},
+          },
+        ],
       });
     }
-
     return config
   }
 };
