@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import TodoApi from './apis/todoApi';
 import UserApi from './apis/userApi';
+import moduleApi from './apis/moduleApi';
 import {ArgMissError, LogicError} from './framework/errors';
 
 const router = new Router();
@@ -31,6 +32,11 @@ router.post('/api/account/get', UserApi.getAccounts);
 router.post('/api/account/add', UserApi.addAccount);
 router.post('/api/account/update', UserApi.updateAccount);
 router.post('/api/account/delete', UserApi.deleteAccount);
+
+router.post('/api/module/get', moduleApi.getModules);
+router.post('/api/module/add', moduleApi.addModule);
+router.post('/api/module/update', moduleApi.updateModule);
+router.post('/api/module/delete', moduleApi.deleteModule);
 
 router.post('/api/*', async ctx => {
   ctx.status = 404;
