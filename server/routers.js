@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import TodoApi from './apis/todoApi';
 import UserApi from './apis/userApi';
-import {ArgMissError} from './framework/errors';
+import {ArgMissError, LogicError} from './framework/errors';
 
 const router = new Router();
 //define data structure for all API
@@ -13,7 +13,7 @@ router.post('/api/*', async (ctx, next) => {
     if (ex instanceof ArgMissError) {
       ctx.status = 400;
       ctx.body = {success: false, data: {}, message: ex.message};
-    } else {
+    } else if (ex instanceof LogicError) {
       ctx.status = 200;
       ctx.body = {success: false, data: {}, message: ex.message};
 
@@ -21,11 +21,14 @@ router.post('/api/*', async (ctx, next) => {
   }
 });
 
+
 router.post('/api/todo/get', TodoApi.getTodo);
 router.post('/api/todo/add', TodoApi.addTodo);
 router.post('/api/todo/toggle', TodoApi.toggleTodo);
 
 router.post('/api/user/login', UserApi.login);
+router.post('/api/user/get', UserApi.getUsers);
+router.post('/api/account/add', UserApi.addAccount);
 
 router.post('/api/*', async ctx => {
   ctx.status = 404;

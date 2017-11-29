@@ -1,10 +1,14 @@
 /**
  * Created by eatong on 17-10-29.
  */
-import Page from './Page';
+import AdminLayout from './AdminLayout';
 import Loading from './Loading';
+import Title from './Title';
+import Page from './Page';
 
 export {
+  AdminLayout,
   Page,
+  Title,
   Loading
 }

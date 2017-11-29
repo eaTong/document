@@ -6,11 +6,20 @@ import ajax from '../util/ajaxUtil';
 import Router from 'next/router';
 
 export default class User {
-  @observable loginUser = {};
+  @observable userList = [];
+  @observable operateType = 'add';
+  @observable showAccountModal = false;
 
   @action
-  async login(form) {
-    const {success} = await  ajax({url: '/api/user/login', data: form});
-    if (success) Router.push('/admin');
+  async addAccount(form) {
+    const {success, data} = await ajax({url: '/api/account/add', data: form});
+    if (success) this.userList = [...this.userList, data];
+    this.toggleAccountModal();
+  }
+
+  @action
+  toggleAccountModal(operate) {
+    this.operateType = operate;
+    this.showAccountModal = !this.showAccountModal;
   }
 }

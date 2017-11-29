@@ -6,6 +6,15 @@ import {observable, action, computed, toJS} from 'mobx';
 export default class App {
   @observable loadingCount = 0;
   @observable loadingUrl = {};
+  @observable path = '';
+  @observable query = {};
+  @observable loginUser = {};
+
+  @action
+  async login(form) {
+    const {success} = await  ajax({url: '/api/user/login', data: form});
+    if (success) Router.push('/admin');
+  }
 
   @action
   loading(key) {

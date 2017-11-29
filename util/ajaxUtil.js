@@ -2,6 +2,7 @@
  * Created by eatong on 17-10-28.
  */
 import axios from 'axios';
+import {notification} from 'antd'
 import store from '../stores';
 
 export default async function ajax(config) {
@@ -28,11 +29,13 @@ export default async function ajax(config) {
     try {
       result = await axios.post(url, data);
       if (!result.data.success) {
+        notification.warning({message: '操作失败', description: result.data.message});
       }
       store.app.cancelLoading();
       return result.data;
     } catch (ex) {
       store.app.cancelLoading();
+      notification.error({message: '操作失败', description:  ex.message});
       return {success: false, data: {}, message: ex.message}
     }
   }

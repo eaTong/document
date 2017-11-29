@@ -5,6 +5,7 @@ import Loading from './Loading';
 import {parse} from 'query-string';
 import Head from 'next/head'
 import '../util/prototypes';
+
 export default Component => class Page extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,8 @@ export default Component => class Page extends React.Component {
   }
 
   static async getInitialProps(ctx) {
+    stores.app.path = ctx.asPath;
+    stores.app.query = ctx.query;
     if (Component.init) {
       const result = await Component.init(ctx) || {};
       for (let key in result) {
@@ -23,9 +26,8 @@ export default Component => class Page extends React.Component {
         }
       }
       this.stores = stores;
-      return {stores};
     }
-    return {};
+    return {stores};
   }
 
   componentWillMount() {
@@ -42,8 +44,6 @@ export default Component => class Page extends React.Component {
 
   componentDidMount() {
     const query = parse(window.location.search);
-    // this.state.query = query;
-    console.log('did mount.....');
     this.setState({query});
   }
 
@@ -53,7 +53,6 @@ export default Component => class Page extends React.Component {
         <div className="layout-default">
           <Loading/>
           <Head>
-            <title>eaTong write a blog with Next.js</title>
             <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport"/>
           </Head>
           <Component query={this.state.query || {}}/>

@@ -2,7 +2,7 @@
  * Created by eatong on 17-11-4.
  */
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/document');
 const connection = mongoose.connection;
 connection.on('error', (error) => {
   console.log('error when connect to mongodb', error);

@@ -4,26 +4,49 @@
 import React, {Component} from 'react';
 import {Page} from '../components';
 import {inject, observer} from 'mobx-react';
-import getFormData from 'get-form-data';
-import ajax from '../util/ajaxUtil';
-import {Input} from 'antd';
+import {Form, Icon, Input, Button, Row, Col} from 'antd';
 
-@inject('user') @observer
+const FormItem = Form.Item;
+
+
+@inject('app') @observer @Form.create()
 class Login extends Component {
 
-  onSubmit(event) {
-    event.preventDefault();
-    this.props.user.login(getFormData(document.querySelector('form')));
-  }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.props.app.login(values);
+      }
+    });
+  };
 
   render() {
-    const {} = this.props;
+    const {getFieldDecorator} = this.props.form;
     return (
-      <form className="columns" onSubmit={this.onSubmit.bind(this)} name="login">
-        <input type="text" className="input" name="user"/>
-        <input type="password" className="input" name="password"/>
-        <button className="button is-primary" type="submit">登录</button>
-      </form>
+      <Row style={{height: '100%'}} align="middle" type="flex">
+        <Col span={8} offset={8}>
+          <Form onSubmit={this.handleSubmit} className="login-form">
+            <FormItem>
+              {getFieldDecorator('account', {
+                rules: [{required: true, message: 'Please input your account!'}],
+              })(
+                <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="account"/>
+              )}
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('password', {
+                rules: [{required: true, message: 'Please input your Password!'}],
+              })(
+                <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password" placeholder="Password"/>
+              )}
+            </FormItem>
+            <Button type="primary" htmlType="submit" className="login-form-button" style={{float: 'right'}}>
+              Log in
+            </Button>
+          </Form>
+        </Col>
+      </Row>
     );
   }
 }

@@ -2,11 +2,8 @@
  * Created by eatong on 17-11-24.
  */
 import Document, {Head, Main, NextScript} from 'next/document';
-// import less from '../styles/test.less'
-// import css from '../styles/test.css'
-// import sass from '../styles/test.sass'
-// import scss from '../styles/test.scss'
-
+import appStyle from '../styles/app.less';
+import flush from 'styled-jsx/server'
 
 export default class MyDocument extends Document {
   render() {
@@ -24,10 +21,7 @@ export default class MyDocument extends Document {
           </Head>
         ) : (
           <Head>
-            {/*<style global dangerouslySetInnerHTML={{ __html: less  }} />*/}
-            {/*<style global dangerouslySetInnerHTML={{ __html: css  }} />*/}
-            {/*<style global dangerouslySetInnerHTML={{ __html: sass  }} />*/}
-            {/*<style global dangerouslySetInnerHTML={{ __html: scss  }} />*/}
+            <style global dangerouslySetInnerHTML={{__html: appStyle}}/>
           </Head>
         )}
       <body>

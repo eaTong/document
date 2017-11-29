@@ -1,0 +1,25 @@
+@import "~antd/dist/antd.less";
+
+.layout-default {
+  height: 100vh;
+
+  .ant-layout-content {
+    display: flex;
+    flex-direction: column;
+    .head {
+      background-color: @layout-trigger-color;
+      padding: 16px;
+      color: @heading-color;
+      display: flex;
+      & > .label {
+        flex: 1;
+      }
+    }
+    .content {
+      margin: 24px 16px;
+      padding: 16px;
+      background-color: @layout-trigger-color;
+      flex: 1;
+    }
+  }
+}
