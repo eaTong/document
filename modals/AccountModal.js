@@ -15,6 +15,7 @@ class AccountModal extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     if (this.props.operateType === 'edit') {
       this.props.form.setFieldsValue(this.props.formData);
     }
@@ -70,14 +71,16 @@ class AccountModal extends Component {
               <Input/>
             )}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="密码"
-            hasFeedback>
-            {getFieldDecorator('password')(
-              <Input/>
-            )}
-          </FormItem>
+          {this.props.operateType !== 'edit' && (
+            <FormItem
+              {...formItemLayout}
+              label="密码"
+              hasFeedback>
+              {getFieldDecorator('password')(
+                <Input/>
+              )}
+            </FormItem>
+          )}
         </Form>
       </Modal>
     );

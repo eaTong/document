@@ -27,8 +27,10 @@ router.post('/api/todo/add', TodoApi.addTodo);
 router.post('/api/todo/toggle', TodoApi.toggleTodo);
 
 router.post('/api/user/login', UserApi.login);
-router.post('/api/user/get', UserApi.getUsers);
+router.post('/api/account/get', UserApi.getAccounts);
 router.post('/api/account/add', UserApi.addAccount);
+router.post('/api/account/update', UserApi.updateAccount);
+router.post('/api/account/delete', UserApi.deleteAccount);
 
 router.post('/api/*', async ctx => {
   ctx.status = 404;

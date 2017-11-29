@@ -19,12 +19,25 @@ export default class UserApi {
     }
   }
 
-  static async getUsers(ctx) {
-    return await userServer.getUsers();
+  static async getAccounts(ctx) {
+    return await userServer.getAccounts();
   }
 
-  static async addAccount(ctx){
+  @checkArgument(['account', 'name'])
+  static async addAccount(ctx) {
     const data = ctx.request.body;
     return await userServer.addAccount(data);
+  }
+
+  @checkArgument(['account', 'name', 'id'])
+  static async updateAccount(ctx) {
+    const data = ctx.request.body;
+    return await userServer.updateAccount(data);
+  }
+
+  @checkArgument('id')
+  static async deleteAccount(ctx) {
+    const data = ctx.request.body;
+    return await userServer.deleteAccount(data.id);
   }
 }

@@ -8,37 +8,54 @@ import {Button, Table} from 'antd';
 import ajax from '../../../util/ajaxUtil';
 import AccountModal from '../../../modals/AccountModal';
 
-@inject('user') @observer
+const ButtonGroup = Button.Group;
+
+@inject('account') @observer
 class Account extends Component {
   constructor(props) {
     super(props);
     this.columns = [
       {key: 'name', title: '姓名', dataIndex: 'name'},
       {key: 'account', title: '账号', dataIndex: 'account'},
+      {
+        key: 'operate', title: '操作', dataIndex: '_id', render: (val, data, index) => {
+        return (
+          <ButtonGroup>
+            <Button icon="edit" onClick={() => this.props.account.toggleAccountModal('edit', data)}/>
+            <Button icon="delete" onClick={() => this.props.account.deleteAccount(val, data, index)}/>
+          </ButtonGroup>
+        );
+      }
+      },
     ];
   }
 
   static async init(ctx) {
-    const {data} = await ajax({url: '/api/user/get', ctx});
-    return {user: {userList: data}};
+    const {data} = await ajax({url: '/api/account/get', ctx});
+    return {account: {accountList: data}};
   }
 
   render() {
-    const {user} = this.props;
+    const {account} = this.props;
     return (
       <AdminLayout head={
         (<div>
           <span className="label">用户管理</span>
           <div className="operate">
             <Button icon="plus" type="primary" onClick={() => {
-              user.toggleAccountModal('add');
+              account.toggleAccountModal('add');
             }}>新建</Button>
           </div>
         </div>)
       }>
-        <Table dataSource={user.userList} columns={this.columns} pagination={false}/>
-        {user.showAccountModal && (
-          <AccountModal onOk={data => user.addAccount(data)} onCancel={() => user.toggleAccountModal()}/>
+        <Table dataSource={account.accountList} columns={this.columns} pagination={false}/>
+        {account.showAccountModal && (
+          <AccountModal
+            operateType={account.operateType}
+            formData={account.currentAccount}
+            onOk={data => account.onSaveAccount(data)}
+            onCancel={() => account.toggleAccountModal()}
+          />
         )}
       </AdminLayout>
     );

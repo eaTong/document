@@ -31,7 +31,7 @@ class Login extends Component {
               {getFieldDecorator('account', {
                 rules: [{required: true, message: 'Please input your account!'}],
               })(
-                <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="account"/>
+                <Input prefix={<Icon type="account" style={{fontSize: 13}}/>} placeholder="account"/>
               )}
             </FormItem>
             <FormItem>

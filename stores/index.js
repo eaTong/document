@@ -1,9 +1,9 @@
 import Todo from './Todo';
 import App from './App';
-import User from './User';
+import Account from './Account';
 
 export default {
   todo: new Todo(),
   app: new App(),
-  user: new User(),
+  account: new Account(),
 }
