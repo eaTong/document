@@ -38,6 +38,12 @@ class AdminLayout extends Component {
               >
                 <Menu.Item key="/admin/system/account">用户管理</Menu.Item>
               </SubMenu>
+              <SubMenu
+                key="/admin/document"
+                title={<span><Icon type="setting"/><span>文档管理</span></span>}
+              >
+                <Menu.Item key="/admin/document/module">模块管理</Menu.Item>
+              </SubMenu>
             </Menu>
           </Sider>
           <Content>

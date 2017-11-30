@@ -2,6 +2,8 @@
  * Created by eatong on 17-10-28.
  */
 import {observable, action, computed, toJS} from 'mobx';
+import router from 'next/router'
+import ajax from '../util/ajaxUtil';
 
 export default class App {
   @observable loadingCount = 0;
@@ -13,7 +15,7 @@ export default class App {
   @action
   async login(form) {
     const {success} = await  ajax({url: '/api/user/login', data: form});
-    if (success) Router.push('/admin');
+    if (success) router.push('/admin');
   }
 
   @action

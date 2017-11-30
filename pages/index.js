@@ -6,7 +6,7 @@ import ajax from '../util/ajaxUtil';
 import {Page, Title} from '../components'
 import {Button} from 'antd';
 
-@inject('blog') @observer
+@inject() @observer
 class Index extends React.Component {
 
 

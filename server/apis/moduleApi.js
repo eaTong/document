@@ -11,21 +11,21 @@ export default class ModuleApi {
     return await moduleServer.getModules();
   }
 
-  static async addModule() {
+  static async addModule(ctx) {
     const data = ctx.request.body;
     return await moduleServer.addModule(data);
 
   }
 
-  static async deleteModule() {
+  static async deleteModule(ctx) {
     const data = ctx.request.body;
-    return await moduleServer.updateModule(data);
+    return await moduleServer.deleteModule(data.id);
 
   }
 
-  static async updateModule() {
+  static async updateModule(ctx) {
     const data = ctx.request.body;
-    return await moduleServer.deleteModule(data.id);
+    return await moduleServer.updateModule(data);
 
   }
 }

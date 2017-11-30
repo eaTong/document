@@ -21,8 +21,6 @@ async function addAccount(data) {
 
 async function updateAccount(data) {
   const user = await User.findById(data.id);
-
-  user.password = MD5(data.password || '123');
   user.name = data.name;
   user.account = data.account;
   await user.save();

@@ -4,7 +4,7 @@
 import Module from '../schema/ModuleSchema';
 
 async function getModules() {
-  return await Module.find();
+  return await Module.find({enable: {$ne: false}});
 }
 
 async function addModule(data) {

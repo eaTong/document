@@ -18,6 +18,9 @@ router.post('/api/*', async (ctx, next) => {
       ctx.status = 200;
       ctx.body = {success: false, data: {}, message: ex.message};
 
+    } else {
+      ctx.status = 500;
+      ctx.body = {success: false, data: {}, message: ex.message};
     }
   }
 });
@@ -39,6 +42,7 @@ router.post('/api/module/update', moduleApi.updateModule);
 router.post('/api/module/delete', moduleApi.deleteModule);
 
 router.post('/api/*', async ctx => {
+  console.log(ctx.url);
   ctx.status = 404;
   ctx.body = 'api not found';
 });
