@@ -2,6 +2,7 @@ import Router from 'koa-router';
 import TodoApi from './apis/todoApi';
 import UserApi from './apis/userApi';
 import moduleApi from './apis/moduleApi';
+import catalogApi from './apis/catalogApi';
 import {ArgMissError, LogicError} from './framework/errors';
 
 const router = new Router();
@@ -41,8 +42,12 @@ router.post('/api/module/add', moduleApi.addModule);
 router.post('/api/module/update', moduleApi.updateModule);
 router.post('/api/module/delete', moduleApi.deleteModule);
 
+router.post('/api/catalog/get', catalogApi.getCatalogs);
+router.post('/api/catalog/add', catalogApi.addCatalog);
+router.post('/api/catalog/update', catalogApi.updateCatalog);
+router.post('/api/catalog/delete', catalogApi.deleteCatalog);
+
 router.post('/api/*', async ctx => {
-  console.log(ctx.url);
   ctx.status = 404;
   ctx.body = 'api not found';
 });

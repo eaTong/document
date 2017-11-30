@@ -1,5 +1,5 @@
 /**
- * Created by eatong on 17-11-29.
+ * Created by eatong on 17-11-30.
  */
 import React, {Component} from 'react';
 import {Page} from '~components';
@@ -7,9 +7,9 @@ import {inject, observer} from 'mobx-react'
 
 
 @inject() @observer
-class Module extends Component {
+class Catalog extends Component {
 
-  static async init() {
+  static async init(ctx) {
   }
 
   render() {
@@ -22,5 +22,5 @@ class Module extends Component {
   }
 }
 
-Module.propTypes = {};
-export default Page(Module);
+Catalog.propTypes = {};
+export default Page(Catalog);
