@@ -20,6 +20,7 @@ class AdminLayout extends Component {
 
   render() {
     const {app} = this.props;
+    const currentPath = this.props.parentPath || app.path;
     return (
       <div style={{height: '100vh'}}>
         <Title>{this.props.title || (typeof this.props.head === 'string' ? this.props.head : '')}</Title>
@@ -29,8 +30,8 @@ class AdminLayout extends Component {
               theme="dark"
               mode="inline"
               onSelect={({key}) => router.push(key)}
-              defaultOpenKeys={[app.path.slice(0, app.path.lastIndexOf('/'))]}
-              defaultSelectedKeys={[app.path]}
+              defaultOpenKeys={[currentPath.slice(0, currentPath.lastIndexOf('/'))]}
+              selectedKeys={[currentPath]}
             >
               <SubMenu
                 key="/admin/system"

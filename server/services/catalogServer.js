@@ -7,7 +7,7 @@ async function getCatalogs(moduleId) {
   return await Catalog.find({
     enable: {$ne: false},
     module: moduleId
-  }).populate('children');
+  }).select('level children name').populate('children');
 }
 
 function structure(catalogs) {

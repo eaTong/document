@@ -14,7 +14,6 @@ export default class Catelog {
 
   @action
   onSelectCatalog(selectedKey, event) {
-    console.log(event);
     if (event.selected) {
       this.currentCatalog = event.node.props.catalog;
     } else {
@@ -44,8 +43,6 @@ export default class Catelog {
 
   @action
   async getCatalogs() {
-
-    console.log(stores.app);
     const {success, data} = await ajax({url: '/api/catalog/get', data: {moduleId: stores.app.query.moduleId}});
     if (success) this.itemList = data;
   }

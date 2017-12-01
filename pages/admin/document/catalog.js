@@ -46,7 +46,7 @@ class Catalog extends Component {
       <AdminLayout title="目录管理" parentPath='/admin/document/module' head={(<div>
         <Breadcrumb className='label'>
           <BreadcrumbItem>
-            <Link href='/admin/document/catalog'><a>模块管理</a></Link>
+            <Link href='/admin/document/module'><a>模块管理</a></Link>
           </BreadcrumbItem>
           <BreadcrumbItem>
             目录管理
@@ -64,11 +64,15 @@ class Catalog extends Component {
           </ButtonGroup>
         </div>
       </div>)}>
-        <Tree autoExpandParent
-              onSelect={(keys, node) => catalog.onSelectCatalog(keys, node)}
-        >
-          {this.renderTreeNodes(catalog.itemList)}
-        </Tree>
+        {catalog.itemList.length > 0 && (
+          <Tree
+            autoExpandParent
+            defaultExpandAll
+            onSelect={(keys, node) => catalog.onSelectCatalog(keys, node)}
+          >
+            {this.renderTreeNodes(catalog.itemList)}
+          </Tree>
+        )}
         {catalog.showCatalogModal && (
           <CatalogModal
             operateType={catalog.operateType}
