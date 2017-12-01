@@ -7,10 +7,12 @@ import catalogServer from '../services/catalogServer';
 
 export default class CatalogApi {
 
-  static async getCatalogs() {
-    return await catalogServer.getCatalogs();
+  @checkArgument('moduleId')
+  static async getCatalogs(ctx) {
+    return await catalogServer.getCatalogs(ctx.request.body.moduleId);
   }
 
+  @checkArgument(['name', 'moduleId'])
   static async addCatalog(ctx) {
     const data = ctx.request.body;
     return await catalogServer.addCatalog(data);

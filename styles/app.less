@@ -29,3 +29,20 @@
     }
   }
 }
+
+.ant-tree {
+  & > li {
+    display: flex;
+    flex-wrap: wrap;
+    .ant-tree-node-content-wrapper {
+      flex: 1;
+    }
+    .ant-tree-child-tree {
+      width: 100%;
+      & > li {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}

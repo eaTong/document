@@ -2,6 +2,7 @@
  * Created by eatong on 17-11-29.
  */
 import React, {Component} from 'react';
+import router from 'next/router';
 import {Page, AdminLayout} from '~components';
 import {inject, observer} from 'mobx-react'
 import {Button, Card, Icon} from 'antd';
@@ -15,7 +16,6 @@ class Module extends Component {
 
   static async init(ctx) {
     const {data} = await ajax({url: '/api/module/get', ctx});
-    console.log(data);
     return {module: {itemList: data}};
   }
 
@@ -24,6 +24,7 @@ class Module extends Component {
       <ButtonGroup>
         <Button icon='edit' onClick={() => this.props.module.toggleModuleModal('edit', item)}/>
         <Button icon='delete' onClick={() => this.props.module.deleteModule(item._id)}/>
+        <Button icon='setting' onClick={() => router.push(`/admin/document/catalog?moduleId=${item._id}`)}/>
       </ButtonGroup>
     )
   }

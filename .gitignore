@@ -1,6 +1,8 @@
 # build output
 dist
 .next
+# temp folder
+temp
 
 # dependencies
 node_modules

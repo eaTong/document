@@ -12,7 +12,7 @@ export default class UserApi {
     const data = ctx.request.body;
     const user = await userServer.login(data.account, data.password);
     if (user) {
-      ctx.session.loginUser = data;
+      ctx.session.loginUser = user;
       return true;
     } else {
       throw (new LogicError('账号或密码错误'));

@@ -22,7 +22,7 @@ class AdminLayout extends Component {
     const {app} = this.props;
     return (
       <div style={{height: '100vh'}}>
-        <Title>{this.props.title || typeof this.props.head === 'string' ? this.props.head : ''}</Title>
+        <Title>{this.props.title || (typeof this.props.head === 'string' ? this.props.head : '')}</Title>
         <Layout>
           <Sider style={{overflow: 'auto', height: '100vh'}}>
             <Menu

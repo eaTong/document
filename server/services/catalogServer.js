@@ -3,13 +3,41 @@
  */
 import Catalog from '../schema/CatalogSchema';
 
-async function getCatalogs() {
-  return await Catalog.find({enable: {$ne: false}});
+async function getCatalogs(moduleId) {
+  return await Catalog.find({
+    enable: {$ne: false},
+    module: moduleId
+  }).populate('children');
+}
+
+function structure(catalogs) {
+  const keyMap = {};
+  const result = [];
+  for (let catalog of catalogs) {
+    keyMap[catalog._id] = {
+      ...catalog._doc,
+      children: catalog.children.map(key => {
+        return keyMap[key._id];
+      })
+    };
+    if (catalog.level === 0) {
+      result.push(keyMap[catalog._id])
+    }
+  }
+  return result;
 }
 
 async function addCatalog(data) {
   const catalog = new Catalog(data);
-  return await catalog.save();
+  catalog.level = catalog.level || 0;
+  catalog.module = data.moduleId;
+  await catalog.save();
+  if (data.parent) {
+    const parent = await Catalog.findById(data.parent);
+    parent.children.push(catalog._id);
+    parent.save();
+  }
+  return catalog;
 }
 
 async function deleteCatalog(id) {
