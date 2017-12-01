@@ -7,8 +7,7 @@ const CatalogSchema = new Schema({
   name: {type: String, required: true},
   comment: {type: String},
   level: {type: Number},
-  children: {type: Array, ref: 'catalog'},
-  parent: {type: String, ref: 'catalog'},
+  children: {type: Array, ref: this},
   module: {type: String, ref: 'module'},
   enable: {type: Boolean},
 });

@@ -67,6 +67,7 @@ class Catalog extends Component {
         {catalog.itemList.length > 0 && (
           <Tree
             autoExpandParent
+            showLine
             defaultExpandAll
             onSelect={(keys, node) => catalog.onSelectCatalog(keys, node)}
           >

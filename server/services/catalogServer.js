@@ -4,10 +4,11 @@
 import Catalog from '../schema/CatalogSchema';
 
 async function getCatalogs(moduleId) {
-  return await Catalog.find({
+  const catalogs = await Catalog.find({
     enable: {$ne: false},
     module: moduleId
-  }).select('level children name').populate('children');
+  }).select('level name children').sort({level: -1});
+  return structure(catalogs);
 }
 
 function structure(catalogs) {
@@ -17,7 +18,7 @@ function structure(catalogs) {
     keyMap[catalog._id] = {
       ...catalog._doc,
       children: catalog.children.map(key => {
-        return keyMap[key._id];
+        return keyMap[key];
       })
     };
     if (catalog.level === 0) {
