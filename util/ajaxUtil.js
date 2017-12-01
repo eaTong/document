@@ -19,9 +19,14 @@ export default async function ajax(config) {
       return result.data;
 
     } catch (ex) {
-      ctx.res.statusCode = 500;
-      ctx.res.end(ex.message);
-      return {success: false, data: {}, message: ex.message}
+      const statusCode = ex.response.status;
+      ctx.res.statusCode = ex.response.status;
+      if (statusCode === 401) {
+        ctx.res.writeHead(302, {'Location': '/login'});
+        res.end();
+        // ctx.res.redirect('https://www.baidu.com');
+      }
+      ctx.res.end(ex.response.data.message);
     }
   } else {
     let result;
@@ -35,7 +40,7 @@ export default async function ajax(config) {
       return result.data;
     } catch (ex) {
       store.app.cancelLoading();
-      notification.error({message: '操作失败', description:  ex.message});
+      notification.error({message: '操作失败', description: ex.message});
       return {success: false, data: {}, message: ex.message}
     }
   }

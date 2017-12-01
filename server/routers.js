@@ -9,6 +9,14 @@ import {ArgMissError, LogicError} from './framework/errors';
 const router = new Router();
 //define data structure for all API
 router.post('/api/*', async (ctx, next) => {
+  if (!/^\/api\/pub/.test(ctx.originalUrl) && ctx.originalUrl !== '/api/user/login') {
+    if (!ctx.session.loginUser) {
+      ctx.status = 401;
+      ctx.body = {success: false, data: {}, message: 'this api is not a public api ,plese login'};
+      return;
+    }
+  }
+
   try {
     const data = await next();
     ctx.body = {success: true, data, message: ''};

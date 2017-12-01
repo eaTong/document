@@ -2,7 +2,7 @@
  * Created by eatong on 17-11-5.
  */
 import React, {Component} from 'react';
-import {Page ,  Title} from '../components';
+import {Page, Title} from '../components';
 import {inject, observer} from 'mobx-react';
 import {Form, Icon, Input, Button, Row, Col} from 'antd';
 
@@ -33,7 +33,7 @@ class Login extends Component {
                 {getFieldDecorator('account', {
                   rules: [{required: true, message: 'Please input your account!'}],
                 })(
-                  <Input prefix={<Icon type="account" style={{fontSize: 13}}/>} placeholder="account"/>
+                  <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="account"/>
                 )}
               </FormItem>
               <FormItem>
