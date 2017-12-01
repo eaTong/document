@@ -25,7 +25,10 @@ class Catalog extends Component {
     return data.map((item) => {
       const treeTitle = (
         <div className="tree-node" style={{display: 'flex', width: '100%'}}>
-          {item.name}
+          <span className="label">{item.name}</span>
+          <span className="extensional">
+            <Link href={`/admin/document/doc?catalogId=${item._id}`}><a>查看/编写</a></Link>
+          </span>
         </div>
       );
       if (item.children && item.children.length > 0) {

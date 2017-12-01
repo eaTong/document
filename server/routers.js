@@ -3,6 +3,7 @@ import TodoApi from './apis/todoApi';
 import UserApi from './apis/userApi';
 import moduleApi from './apis/moduleApi';
 import catalogApi from './apis/catalogApi';
+import docApi from './apis/docApi';
 import {ArgMissError, LogicError} from './framework/errors';
 
 const router = new Router();
@@ -46,6 +47,11 @@ router.post('/api/catalog/get', catalogApi.getCatalogs);
 router.post('/api/catalog/add', catalogApi.addCatalog);
 router.post('/api/catalog/update', catalogApi.updateCatalog);
 router.post('/api/catalog/delete', catalogApi.deleteCatalog);
+
+router.post('/api/doc/get', docApi.getDocs);
+router.post('/api/doc/add', docApi.addDoc);
+router.post('/api/doc/update', docApi.updateDoc);
+router.post('/api/doc/delete', docApi.deleteDoc);
 
 router.post('/api/*', async ctx => {
   ctx.status = 404;

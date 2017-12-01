@@ -19,7 +19,7 @@ function structure(catalogs) {
       ...catalog._doc,
       children: catalog.children.map(key => {
         return keyMap[key];
-      })
+      }).filter(cat => !!cat)
     };
     if (catalog.level === 0) {
       result.push(keyMap[catalog._id])

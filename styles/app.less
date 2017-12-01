@@ -45,4 +45,32 @@
       }
     }
   }
+  .tree-node {
+    display: flex;
+    width: 100%;
+    .label {
+      flex: 1;
+    }
+    .extensional {
+      display: none;
+    }
+    &:hover {
+      .extensional {
+        display: block;
+      }
+    }
+  }
+}
+
+.quill {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  .ql-toolbar {
+
+  }
+  .ql-container {
+    flex: 1;
+    overflow: auto;
+  }
 }
