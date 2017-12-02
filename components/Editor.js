@@ -12,6 +12,7 @@ class Editor extends Component {
 
   handleChange(value) {
     this.setState({value});
+    console.log(value);
     this.props.onChange && this.props.onChange(value);
   }
 
@@ -20,7 +21,7 @@ class Editor extends Component {
       const Quill = require('react-quill');
       return (
         <Quill
-          value={this.props.value || this.state.value}
+          value={this.state.value}
           modules={{
             toolbar: [
               [{'header': [1, 2, 3, 4, 5, 6, false]}],

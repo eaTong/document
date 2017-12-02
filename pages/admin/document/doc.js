@@ -19,7 +19,7 @@ class Doc extends Component {
         <div className="container">
           <Editor onChange={data => doc.onChangeContent(data)}/>
           <div className="footer">
-            <Button>保存</Button>
+            <Button onClick={() => doc.saveDoc()}>保存</Button>
           </div>
         </div>
         <style jsx>{`

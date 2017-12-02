@@ -24,7 +24,7 @@ export default class DocApi {
 
   }
 
-  @checkArgument(['_id'])
+  @checkArgument(['content','catalog'])
   static async updateDoc(ctx) {
     const data = ctx.request.body;
     return await docServer.updateDoc(data);

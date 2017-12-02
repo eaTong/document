@@ -21,9 +21,8 @@ async function deleteDoc(id) {
 }
 
 async function updateDoc(data) {
-  const doc = await Doc.findById(data.id);
-  doc.name = data.name;
-  doc.remark = data.remark;
+  const doc = await Doc.findOne({catalog: data.catalog}) || new Doc(data);
+  doc.content = data.content;
   await doc.save();
   return doc;
 
