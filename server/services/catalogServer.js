@@ -2,12 +2,13 @@
  * Created by eatong on 17-11-29.
  */
 import Catalog from '../schema/CatalogSchema';
+import Doc from '../schema/DocSchema';
 
 async function getCatalogs(moduleId) {
   const catalogs = await Catalog.find({
     enable: {$ne: false},
     module: moduleId
-  }).select('level name children').sort({level: -1});
+  }).populate('doc').sort({level: -1});
   return structure(catalogs);
 }
 

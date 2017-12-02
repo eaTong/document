@@ -4,8 +4,9 @@
 import mongoose, {Schema} from '../mongoConfig';
 
 const DocSchema = new Schema({
-  content: {type: String, required: true},
+  content: {type: String},
   enable: {type: Boolean},
+  catalog: {type: String, ref: 'catalog'}
 });
 
-export default mongoose.model('Doc', DocSchema);
+export default mongoose.model('doc', DocSchema);

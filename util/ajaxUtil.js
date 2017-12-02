@@ -6,7 +6,7 @@ import {notification} from 'antd'
 import store from '../stores';
 
 export default async function ajax(config) {
-  const {url, data, ctx, headers} = config;
+  const {url, data, ctx} = config;
   //if ctx.req is not null or undefined means this request is called from server-side,
   if (ctx && ctx.req) {
     try {
@@ -24,7 +24,6 @@ export default async function ajax(config) {
       if (statusCode === 401) {
         ctx.res.writeHead(302, {'Location': '/login'});
         res.end();
-        // ctx.res.redirect('https://www.baidu.com');
       }
       ctx.res.end(ex.response.data.message);
     }

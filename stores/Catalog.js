@@ -58,6 +58,7 @@ export default class Catelog {
   async deleteCatalog(val) {
     const {success} = await ajax({url: '/api/catalog/delete', data: {id: val}});
     if (success) {
+      this.currentCatalog = {};
       message.success('删除用户成功！');
       await this.getCatalogs();
     }

@@ -9,6 +9,7 @@ const CatalogSchema = new Schema({
   level: {type: Number},
   children: {type: Array, ref: this},
   module: {type: String, ref: 'module'},
+  hasDoc: {type: Boolean},
   enable: {type: Boolean},
 });
 
