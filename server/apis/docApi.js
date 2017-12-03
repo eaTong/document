@@ -24,10 +24,10 @@ export default class DocApi {
 
   }
 
-  @checkArgument(['content','catalog'])
+  @checkArgument(['content', 'catalog'])
   static async updateDoc(ctx) {
     const data = ctx.request.body;
-    return await docServer.updateDoc(data);
+    return await docServer.updateDoc(data, ctx.session.loginUser);
 
   }
 }

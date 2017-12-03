@@ -3,7 +3,8 @@
  */
 import {observable, action, computed, toJS} from 'mobx';
 import ajax from '../util/ajaxUtil';
-import stores from './index'
+import stores from './index';
+import {message} from 'antd';
 
 export default class Doc {
   @observable content = '';
@@ -21,6 +22,6 @@ export default class Doc {
       url: '/api/doc/update',
       data: {content: this.content, catalog: stores.app.query.catalogId}
     });
-    console.log(success, data);
+    message.success('编辑文档成功');
   }
 }

@@ -6,7 +6,10 @@ import mongoose, {Schema} from '../mongoConfig';
 const DocSchema = new Schema({
   content: {type: String},
   enable: {type: Boolean},
-  catalog: {type: String, ref: 'catalog'}
+  catalog: {type: String, ref: 'catalog'},
+  creator: {type: String, ref: 'user'},
+  createTime:{type:Date},
+
 });
 
 export default mongoose.model('doc', DocSchema);

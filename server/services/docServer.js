@@ -2,6 +2,7 @@
  * Created by eatong on 17-11-29.
  */
 import Doc from '../schema/DocSchema';
+import Catalog from '../schema/CatalogSchema';
 
 async function getDocs() {
   return await Doc.find({enable: {$ne: false}});
@@ -20,9 +21,19 @@ async function deleteDoc(id) {
 
 }
 
-async function updateDoc(data) {
-  const doc = await Doc.findOne({catalog: data.catalog}) || new Doc(data);
-  doc.content = data.content;
+async function updateDoc(data, user) {
+  let doc = await Doc.findOne({catalog: data.catalog});
+  if (doc) {
+    doc.content = data.content;
+
+  } else {
+    doc = new Doc(data);
+    doc.createor = user._id;
+    doc.createTime = new Date();
+    const catalog = await Catalog.findById(data.catalog);
+    catalog.hasDoc = true;
+    await  catalog.save();
+  }
   await doc.save();
   return doc;
 
