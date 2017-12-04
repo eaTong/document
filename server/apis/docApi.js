@@ -24,10 +24,26 @@ export default class DocApi {
 
   }
 
+  @checkArgument('catalogId')
+  static async getDocByCatalog(ctx) {
+    const data = ctx.request.body;
+    const result = await docServer.getDocByCatalog(data.catalogId);
+    console.log(result);
+    return result;
+
+  }
+
   @checkArgument(['content', 'catalog'])
   static async updateDoc(ctx) {
     const data = ctx.request.body;
     return await docServer.updateDoc(data, ctx.session.loginUser);
+
+  }
+
+  @checkArgument(['content', 'catalog'])
+  static async publishDoc(ctx) {
+    const data = ctx.request.body;
+    return await docServer.publishDoc(data, ctx.session.loginUser);
 
   }
 }

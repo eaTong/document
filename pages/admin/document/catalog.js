@@ -23,7 +23,6 @@ class Catalog extends Component {
 
   renderTreeNodes(data) {
     return data.map((item) => {
-      console.log(item);
       const treeTitle = (
         <div className="tree-node" style={{display: 'flex', width: '100%'}}>
           <span className="label">{item.name}</span>

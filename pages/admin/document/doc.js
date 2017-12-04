@@ -4,22 +4,43 @@
 import React, {Component} from 'react';
 import {Page, AdminLayout, Editor} from '~components';
 import {inject, observer} from 'mobx-react';
-import {Button} from 'antd';
+import Link from 'next/link';
+import ajax from "../../../util/ajaxUtil";
+import {Button, Breadcrumb} from 'antd';
+
+const BreadcrumbItem = Breadcrumb.Item;
 
 @inject('doc') @observer
 class Doc extends Component {
 
   static async init(ctx) {
+    const {success, data} = await ajax({url: '/api/doc/detail/catalog', data: {catalogId: ctx.query.catalogId}, ctx});
+    return {doc: {content: data.content, catalog: data.catalog}};
   }
 
   render() {
     const {doc} = this.props;
     return (
-      <AdminLayout title='文档管理'>
+      <AdminLayout
+        title='文档管理'
+        head={(
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <Link href='/admin/document/module'><a>模块管理</a></Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <Link href={`/admin/document/catalog?moduleId=${doc.catalog.module}`}><a>目录管理</a></Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              {doc.catalog.name}
+            </BreadcrumbItem>
+          </Breadcrumb>
+        )}>
         <div className="container">
-          <Editor onChange={data => doc.onChangeContent(data)}/>
+          <Editor onChange={data => doc.onChangeContent(data)} value={doc.content}/>
           <div className="footer">
             <Button onClick={() => doc.saveDoc()}>保存</Button>
+            <Button type="primary" onClick={() => doc.publishDoc()}>保存并发布</Button>
           </div>
         </div>
         <style jsx>{`

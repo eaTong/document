@@ -10,6 +10,7 @@ const CatalogSchema = new Schema({
   children: {type: Array, ref: this},
   module: {type: String, ref: 'module'},
   hasDoc: {type: Boolean},
+  published: {type: Boolean},
   enable: {type: Boolean},
 });
 

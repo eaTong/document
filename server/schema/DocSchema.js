@@ -8,8 +8,10 @@ const DocSchema = new Schema({
   enable: {type: Boolean},
   catalog: {type: String, ref: 'catalog'},
   creator: {type: String, ref: 'user'},
-  createTime:{type:Date},
-
+  createTime: {type: Date},
+  publishedDoc: {type: String},
+  publishHistory: {type: Array,},
+  lastPublishUser: {type: String, ref: 'user'},
 });
 
 export default mongoose.model('doc', DocSchema);

@@ -7,12 +7,11 @@ class Editor extends Component {
   state = {mounted: false, value: ''};
 
   componentDidMount() {
-    this.setState({mounted: true});
+    this.setState({mounted: true, value: this.props.value});
   }
 
   handleChange(value) {
     this.setState({value});
-    console.log(value);
     this.props.onChange && this.props.onChange(value);
   }
 

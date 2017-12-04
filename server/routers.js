@@ -58,7 +58,9 @@ router.post('/api/catalog/delete', catalogApi.deleteCatalog);
 
 router.post('/api/doc/get', docApi.getDocs);
 router.post('/api/doc/add', docApi.addDoc);
+router.post('/api/doc/detail/catalog', docApi.getDocByCatalog);
 router.post('/api/doc/update', docApi.updateDoc);
+router.post('/api/doc/publish', docApi.publishDoc);
 router.post('/api/doc/delete', docApi.deleteDoc);
 
 router.post('/api/*', async ctx => {
