@@ -63,6 +63,10 @@ router.post('/api/doc/update', docApi.updateDoc);
 router.post('/api/doc/publish', docApi.publishDoc);
 router.post('/api/doc/delete', docApi.deleteDoc);
 
+router.post('/api/pub/module/get', moduleApi.getModules);
+router.post('/api/pub/catalog/get', catalogApi.getCatalogs);
+router.post('/api/pub/doc/detail/catalog', docApi.getDocByCatalog);
+
 router.post('/api/*', async ctx => {
   ctx.status = 404;
   ctx.body = 'api not found';
