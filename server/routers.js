@@ -12,7 +12,7 @@ router.post('/api/*', async (ctx, next) => {
   if (!/^\/api\/pub/.test(ctx.originalUrl) && ctx.originalUrl !== '/api/user/login') {
     if (!ctx.session.loginUser) {
       ctx.status = 401;
-      ctx.body = {success: false, data: {}, message: 'this api is not a public api ,plese login'};
+      ctx.body = {success: false, data: {}, message: 'this api is not a public api ,please login'};
       return;
     }
   }
@@ -65,7 +65,7 @@ router.post('/api/doc/delete', docApi.deleteDoc);
 
 router.post('/api/pub/module/get', moduleApi.getModules);
 router.post('/api/pub/catalog/get', catalogApi.getCatalogs);
-router.post('/api/pub/doc/detail/catalog', docApi.getDocByCatalog);
+router.post('/api/pub/doc/detail/catalog', docApi.viewDocByCatalog);
 
 router.post('/api/*', async ctx => {
   ctx.status = 404;

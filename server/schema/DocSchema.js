@@ -8,6 +8,7 @@ const DocSchema = new Schema({
   enable: {type: Boolean},
   catalog: {type: String, ref: 'catalog'},
   creator: {type: String, ref: 'user'},
+  viewCount: {type: Number},
   createTime: {type: Date},
   publishedDoc: {type: String},
   publishHistory: {type: Array,},

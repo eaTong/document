@@ -27,10 +27,21 @@ export default class DocApi {
   @checkArgument('catalogId')
   static async getDocByCatalog(ctx) {
     const data = ctx.request.body;
-    const result = await docServer.getDocByCatalog(data.catalogId);
-    console.log(result);
-    return result;
+    return await docServer.getDocByCatalog(data.catalogId);
 
+  }
+
+  @checkArgument('catalogId')
+  static async viewDocByCatalog(ctx) {
+    const {body} = ctx.request;
+    const readDoc = ctx.session.readDoc || {};
+    const blogHasRead = readDoc[body.id];
+    if (!blogHasRead) {
+      readDoc[body.id] = true;
+      ctx.session.readDoc = readDoc;
+    }
+    //if has read , should not add viewCount
+    return await docServer.getDocByCatalog(body.catalogId, !blogHasRead);
   }
 
   @checkArgument(['content', 'catalog'])

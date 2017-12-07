@@ -21,9 +21,13 @@ async function deleteDoc(id) {
   return doc;
 }
 
-async function getDocByCatalog(catalogId) {
+async function getDocByCatalog(catalogId, shouldAddCount) {
   const doc = await Doc.findOne({catalog: catalogId});
   const catalog = await Catalog.findById(catalogId);
+  if (shouldAddCount) {
+    doc.viewCount = doc.viewCount ? doc.viewCount + 1 : 1;
+    await doc.save();
+  }
   return {content: doc ? doc.content : '', catalog};
 }
 

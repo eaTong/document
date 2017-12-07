@@ -76,7 +76,7 @@ class Doc extends Component {
 
           }
           .document-page .catalog{
-            transform:translateX(0);
+            transform:translateX(0); 
           }
           .document-page .content{
 
