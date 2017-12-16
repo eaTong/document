@@ -15,6 +15,7 @@
     "koa-body": "^2.5.0",
     "koa-connect": "^2.0.0",
     "koa-cookie": "^1.0.0",
+    "koa-cors": "^0.0.16",
     "koa-logger": "^3.1.0",
     "koa-router": "^7.3.0",
     "koa-session-mongo": "^1.1.0",

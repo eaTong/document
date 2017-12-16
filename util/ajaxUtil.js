@@ -7,11 +7,18 @@ import store from '../stores';
 
 export default async function ajax(config) {
   const {url, data, ctx} = config;
+  const method = config.method || 'post';
+  let result;
   //if ctx.req is not null or undefined means this request is called from server-side,
   if (ctx && ctx.req) {
     try {
       const host = ctx.req.headers.host;
-      const result = await axios.post('http://' + host + url, data, {headers: ctx.req.headers});
+      // const result = await axios.post('http://' + host + url, data, {headers: ctx.req.headers});
+      if (method.toLowerCase() === 'get') {
+        result = await axios.get('http://' + host + url, {params: data, headers: ctx.req.headers});
+      } else {
+        result = await axios.post('http://' + host + url, data, {headers: ctx.req.headers});
+      }
       if (!result.data.success) {
         ctx.res.statusCode = 200;
         ctx.res.end(result.data.message);
@@ -28,10 +35,13 @@ export default async function ajax(config) {
       ctx.res.end(ex.response.data.message);
     }
   } else {
-    let result;
     store.app.loading();
     try {
-      result = await axios.post(url, data);
+      if (method.toLowerCase() === 'get') {
+        result = await axios.get(url, {params: data});
+      } else {
+        result = await axios.post(url, data, {headers: ctx.req.headers});
+      }
       if (!result.data.success) {
         notification.warning({message: '操作失败', description: result.data.message});
       }

@@ -10,7 +10,7 @@ import {Card} from 'antd';
 class Index extends React.Component {
 
   static async init(ctx) {
-    const {data} = await ajax({url: '/api/pub/module/get', ctx});
+    const {data} = await ajax({url: '/api/pub/module/get', method: 'get', ctx});
     return {tourist: {modules: data}};
   }
 

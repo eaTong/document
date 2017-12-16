@@ -2,7 +2,7 @@ import path from 'path';
 import next from 'next';
 import {useStaticRendering} from 'mobx-react';
 import Koa from 'koa';
-import koaBody from 'koa-body';
+import body from 'koa-body';
 import koaConnect from 'koa-connect';
 import compression from 'compression';
 import cookie from 'koa-cookie';
@@ -13,6 +13,7 @@ import router from './routers';
 import {connection} from './mongoConfig';
 import staticCache from 'koa-static-cache';
 import serve from 'koa-static';
+import cors from 'koa-cors';
 
 const port = parseInt(process.env.PORT, 10) || 8080;
 const dev = process.env.NODE_ENV !== 'production';
@@ -37,27 +38,28 @@ nextApp.prepare().then(() => {
   app.use(cookie());
   app.use(serve('.next/static'), {
     maxAge: 365 * 24 * 60 * 60,
-    gzip:true
+    gzip: true
   });
   app.use(staticCache(path.join(__dirname, 'static'), {
     maxAge: 365 * 24 * 60 * 60
   }));
 //define mongo session storage...
-    app.use(session({
-      name: 'eaTong-session-id',
-      signed: true,
-      overwrite: true,
-      store: mongoStore.create({mongoose: connection})
-    }));
+  app.use(session({
+    name: 'eaTong-session-id',
+    signed: true,
+    overwrite: true,
+    store: mongoStore.create({mongoose: connection})
+  }));
   app.keys = ['key for eaTong'];
   //inject logger to ctx
   app.use(async (ctx, next) => {
     ctx.logger = logger;
     await next();
   });
-
-  //use koaBody to resolve data
-  app.use(koaBody({multipart: true}));
+//cross origin
+  app.use(cors({methods: 'GET'}));
+  //use body to resolve data
+  app.use(body({multipart: true}));
 
 //all routes just all API
   app.use(router.routes());

@@ -3628,6 +3628,10 @@ koa-cookie@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/koa-cookie/download/koa-cookie-1.0.0.tgz#7c79723dd03b97abcfe430028b700bd47a36dafb"
 
+koa-cors@^0.0.16:
+  version "0.0.16"
+  resolved "http://registry.npm.taobao.org/koa-cors/download/koa-cors-0.0.16.tgz#98107993a7909e34c042986c5ec6156d77f3432e"
+
 koa-is-json@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/koa-is-json/download/koa-is-json-1.0.0.tgz#273c07edcdcb8df6a2c1ab7d59ee76491451ec14"

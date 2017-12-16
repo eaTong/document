@@ -1,63 +1,21 @@
 import Router from 'koa-router';
+import {parse} from 'query-string';
 import TodoApi from './apis/todoApi';
 import UserApi from './apis/userApi';
 import moduleApi from './apis/moduleApi';
 import catalogApi from './apis/catalogApi';
 import docApi from './apis/docApi';
-import {ArgMissError, LogicError} from './framework/errors';
-import userServer from "./services/userServer";
+
+import authCheck from './framework/authCheck';
 
 const router = new Router();
-//define data structure for all API
-router.post('/api/*', async (ctx, next) => {
-  if (!/^\/api\/pub/.test(ctx.originalUrl) && ctx.originalUrl !== '/api/user/login') {
-    if (/^\/api\/auth/.test(ctx.originalUrl)) {
-      if (ctx.req.headers['auth']) {
-        try {
-          const authData = JSON.parse(ctx.req.headers['auth']);
-          const user = await userServer.login(authData.account, authData.password);
-          console.log(user, authData);
-          if (!user) {
-            ctx.status = 401;
-            ctx.body = {success: false, data: {}, message: 'error authorize information'};
-            return;
-          }
-        } catch (ex) {
-          ctx.status = 401;
-          ctx.body = {success: false, data: {}, message: 'error authorize information'};
-          return;
-        }
-      } else {
-        ctx.status = 401;
-        ctx.body = {success: false, data: {}, message: 'missing authorize information'};
-        return;
-      }
-    } else {
-      if (!ctx.session.loginUser) {
-        ctx.status = 401;
-        ctx.body = {success: false, data: {}, message: 'this api is not a public api ,please login'};
-        return;
-      }
-    }
-  }
-
-  try {
-    const data = await next();
-    ctx.body = {success: true, data, message: ''};
-  } catch (ex) {
-    if (ex instanceof ArgMissError) {
-      ctx.status = 400;
-      ctx.body = {success: false, data: {}, message: ex.message};
-    } else if (ex instanceof LogicError) {
-      ctx.status = 200;
-      ctx.body = {success: false, data: {}, message: ex.message};
-
-    } else {
-      ctx.status = 500;
-      ctx.body = {success: false, data: {}, message: ex.message};
-    }
-  }
+router.get(/^\/api/, async (ctx, next) => {
+  ctx.request.body = parse(ctx.req._parsedUrl.query || "");
+  await next();
 });
+//define data structure for all API
+router.post('/api/*', authCheck);
+router.get('/api/*', authCheck);
 
 
 router.post('/api/todo/get', TodoApi.getTodo);
@@ -87,14 +45,18 @@ router.post('/api/doc/update', docApi.updateDoc);
 router.post('/api/doc/publish', docApi.publishDoc);
 router.post('/api/doc/delete', docApi.deleteDoc);
 
-router.post('/api/pub/module/get', moduleApi.getModules);
-router.post('/api/pub/catalog/get', catalogApi.getCatalogs);
-router.post('/api/pub/doc/detail/catalog', docApi.viewDocByCatalog);
+router.get('/api/pub/module/get', moduleApi.getModules);
+router.get('/api/pub/catalog/get', catalogApi.getCatalogs);
+router.get('/api/pub/doc/detail/catalog', docApi.viewDocByCatalog);
 
 
 router.post('/api/auth/catalog/add', catalogApi.authAddCatalog);
 
 router.post('/api/*', async ctx => {
+  ctx.status = 404;
+  ctx.body = 'api not found';
+});
+router.get('/api/*', async ctx => {
   ctx.status = 404;
   ctx.body = 'api not found';
 });

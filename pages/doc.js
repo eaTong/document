@@ -15,7 +15,7 @@ const TreeNode = Tree.TreeNode;
 class Doc extends Component {
 
   static async init(ctx) {
-    const {data} = await ajax({url: '/api/pub/catalog/get', data: {moduleId: ctx.query.id}, ctx});
+    const {data} = await ajax({url: '/api/pub/catalog/get',method:'get', data: {moduleId: ctx.query.id}, ctx});
     return {tourist: {catalog: data}};
   }
 
@@ -76,7 +76,7 @@ class Doc extends Component {
 
           }
           .document-page .catalog{
-            transform:translateX(0); 
+            transform:translateX(0);
           }
           .document-page .content{
 
