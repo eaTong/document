@@ -25,7 +25,7 @@ export default class ModuleApi {
 
   }
 
-  @checkArgument(['name', '_id'])
+  @checkArgument(['name', 'id'])
   static async updateModule(ctx) {
     const data = ctx.request.body;
     return await moduleServer.updateModule(data);

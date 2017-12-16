@@ -3,12 +3,13 @@
  */
 import Catalog from '../schema/CatalogSchema';
 import Doc from '../schema/DocSchema';
+import {LogicError} from "../framework/errors";
 
 async function getCatalogs(moduleId) {
   const catalogs = await Catalog.find({
     enable: {$ne: false},
     module: moduleId
-  }).populate('doc').sort({level: -1});
+  }).sort({level: -1});
   return structure(catalogs);
 }
 
@@ -37,7 +38,29 @@ async function addCatalog(data) {
   if (data.parent) {
     const parent = await Catalog.findById(data.parent);
     parent.children.push(catalog._id);
-    parent.save();
+    await parent.save();
+  }
+  return catalog;
+}
+
+async function authAddCatalog(data) {
+  if (await Catalog.findOne({thirdPartyKey: data.thirdPartyKey})) {
+    throw new LogicError('thirdPartyKey should be unique');
+  }
+  let catalog, parent;
+  catalog = new Catalog(data);
+  catalog.module = data.moduleId;
+  catalog.thirdPartyKey = data.thirdPartyKey;
+  if (data.parent) {
+    parent = await Catalog.findOne({thirdPartyKey: data.parent});
+    catalog.level = parent ? parent.level + 1 : 0;
+  } else {
+    catalog.level = 0;
+  }
+  await catalog.save();
+  if (parent) {
+    parent.children.push(catalog._id);
+    await parent.save();
   }
   return catalog;
 }
@@ -59,4 +82,4 @@ async function updateCatalog(data) {
 
 }
 
-export default {getCatalogs, addCatalog, deleteCatalog, updateCatalog}
+export default {getCatalogs, addCatalog, deleteCatalog, updateCatalog, authAddCatalog}

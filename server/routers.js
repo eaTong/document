@@ -5,15 +5,39 @@ import moduleApi from './apis/moduleApi';
 import catalogApi from './apis/catalogApi';
 import docApi from './apis/docApi';
 import {ArgMissError, LogicError} from './framework/errors';
+import userServer from "./services/userServer";
 
 const router = new Router();
 //define data structure for all API
 router.post('/api/*', async (ctx, next) => {
   if (!/^\/api\/pub/.test(ctx.originalUrl) && ctx.originalUrl !== '/api/user/login') {
-    if (!ctx.session.loginUser) {
-      ctx.status = 401;
-      ctx.body = {success: false, data: {}, message: 'this api is not a public api ,please login'};
-      return;
+    if (/^\/api\/auth/.test(ctx.originalUrl)) {
+      if (ctx.req.headers['auth']) {
+        try {
+          const authData = JSON.parse(ctx.req.headers['auth']);
+          const user = await userServer.login(authData.account, authData.password);
+          console.log(user, authData);
+          if (!user) {
+            ctx.status = 401;
+            ctx.body = {success: false, data: {}, message: 'error authorize information'};
+            return;
+          }
+        } catch (ex) {
+          ctx.status = 401;
+          ctx.body = {success: false, data: {}, message: 'error authorize information'};
+          return;
+        }
+      } else {
+        ctx.status = 401;
+        ctx.body = {success: false, data: {}, message: 'missing authorize information'};
+        return;
+      }
+    } else {
+      if (!ctx.session.loginUser) {
+        ctx.status = 401;
+        ctx.body = {success: false, data: {}, message: 'this api is not a public api ,please login'};
+        return;
+      }
     }
   }
 
@@ -66,6 +90,9 @@ router.post('/api/doc/delete', docApi.deleteDoc);
 router.post('/api/pub/module/get', moduleApi.getModules);
 router.post('/api/pub/catalog/get', catalogApi.getCatalogs);
 router.post('/api/pub/doc/detail/catalog', docApi.viewDocByCatalog);
+
+
+router.post('/api/auth/catalog/add', catalogApi.authAddCatalog);
 
 router.post('/api/*', async ctx => {
   ctx.status = 404;

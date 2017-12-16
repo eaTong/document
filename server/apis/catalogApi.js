@@ -19,6 +19,12 @@ export default class CatalogApi {
 
   }
 
+  @checkArgument(['name', 'moduleId', 'thirdPartyKey'])
+  static async authAddCatalog(ctx) {
+    const data = ctx.request.body;
+    return await catalogServer.authAddCatalog(data);
+  }
+
   static async deleteCatalog(ctx) {
     const data = ctx.request.body;
     return await catalogServer.deleteCatalog(data.id);
