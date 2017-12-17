@@ -43,6 +43,24 @@ async function addCatalog(data) {
   return catalog;
 }
 
+
+async function deleteCatalog(id) {
+  const catalog = await Catalog.findById(id);
+  catalog.enable = false;
+  await catalog.save();
+  return catalog;
+
+}
+
+async function updateCatalog(data) {
+  const catalog = await Catalog.findById(data.id);
+  catalog.name = data.name;
+  catalog.remark = data.remark;
+  await catalog.save();
+  return catalog;
+
+}
+
 async function authAddCatalog(data) {
   if (await Catalog.findOne({thirdPartyKey: data.thirdPartyKey})) {
     throw new LogicError('thirdPartyKey should be unique');
@@ -65,21 +83,28 @@ async function authAddCatalog(data) {
   return catalog;
 }
 
-async function deleteCatalog(id) {
-  const catalog = await Catalog.findById(id);
+async function authUpdateCatalog(data) {
+  const catalog = await Catalog.findById(data.thirdPartyKey);
+  catalog.name = data.name;
+  catalog.remark = data.remark;
+  await catalog.save();
+  return catalog;
+}
+
+async function authDeleteCatalog(id) {
+  const catalog = await Catalog.findById(thirdPartyKey);
   catalog.enable = false;
   await catalog.save();
   return catalog;
 
 }
 
-async function updateCatalog(data) {
-  const catalog = await Catalog.findById(data.id);
-  catalog.name = data.name;
-  catalog.remark = data.remark;
-  await catalog.save();
-  return catalog;
-
+export default {
+  getCatalogs,
+  addCatalog,
+  deleteCatalog,
+  updateCatalog,
+  authAddCatalog,
+  authUpdateCatalog,
+  authDeleteCatalog
 }
-
-export default {getCatalogs, addCatalog, deleteCatalog, updateCatalog, authAddCatalog}

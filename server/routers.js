@@ -49,8 +49,9 @@ router.get('/api/pub/module/get', moduleApi.getModules);
 router.get('/api/pub/catalog/get', catalogApi.getCatalogs);
 router.get('/api/pub/doc/detail/catalog', docApi.viewDocByCatalog);
 
-
 router.post('/api/auth/catalog/add', catalogApi.authAddCatalog);
+router.post('/api/auth/catalog/update', catalogApi.authUpdateCatalog);
+router.post('/api/auth/catalog/delete', catalogApi.authDeleteCatalog);
 
 router.post('/api/*', async ctx => {
   ctx.status = 404;

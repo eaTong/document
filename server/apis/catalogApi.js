@@ -19,11 +19,6 @@ export default class CatalogApi {
 
   }
 
-  @checkArgument(['name', 'moduleId', 'thirdPartyKey'])
-  static async authAddCatalog(ctx) {
-    const data = ctx.request.body;
-    return await catalogServer.authAddCatalog(data);
-  }
 
   static async deleteCatalog(ctx) {
     const data = ctx.request.body;
@@ -34,6 +29,24 @@ export default class CatalogApi {
   static async updateCatalog(ctx) {
     const data = ctx.request.body;
     return await catalogServer.updateCatalog(data);
+
+  }
+
+  @checkArgument(['name', 'moduleId', 'thirdPartyKey'])
+  static async authAddCatalog(ctx) {
+    const data = ctx.request.body;
+    return await catalogServer.authAddCatalog(data);
+  }
+
+  static async authUpdateCatalog(ctx) {
+    const data = ctx.request.body;
+    return await catalogServer.authUpdateCatalog(data);
+
+  }
+
+  static async authDeleteCatalog(ctx) {
+    const data = ctx.request.body;
+    return await catalogServer.authDeleteCatalog(data);
 
   }
 }
