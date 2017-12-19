@@ -40,7 +40,7 @@ export default async function ajax(config) {
       if (method.toLowerCase() === 'get') {
         result = await axios.get(url, {params: data});
       } else {
-        result = await axios.post(url, data, {headers: ctx.req.headers});
+        result = await axios.post(url, data);
       }
       if (!result.data.success) {
         notification.warning({message: '操作失败', description: result.data.message});

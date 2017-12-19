@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Page} from '~components';
+import Link from 'next/link';
 import {inject, observer} from 'mobx-react'
 import {Breadcrumb, Button, Tree} from 'antd';
 import ajax from "../util/ajaxUtil";
@@ -11,21 +12,44 @@ const BreadcrumbItem = Breadcrumb.Item;
 const TreeNode = Tree.TreeNode;
 
 
-@inject('tourist') @observer
+@inject('tourist', 'app') @observer
 class Doc extends Component {
 
   static async init(ctx) {
-    const {data} = await ajax({url: '/api/pub/catalog/get',method:'get', data: {moduleId: ctx.query.id}, ctx});
-    return {tourist: {catalog: data}};
+    const result = {tourist: {}};
+    const {data} = await ajax({url: '/api/pub/catalog/get', method: 'get', data: {moduleId: ctx.query.id}, ctx});
+    result.tourist.catalog = data;
+    if (ctx.query.catalogId) {
+      const doc = await ajax({
+        url: '/api/pub/doc/detail/catalog',
+        method: 'get',
+        data: {catalogId: ctx.query.catalogId},
+        ctx
+      });
+      result.tourist.document = doc ? doc.data : undefined;
+    }
+
+    return result;
   }
 
   renderTreeNodes(data) {
     return data.map((item) => {
-      const treeTitle = (
+      const treeTitle = item.published ? (
+        <Link
+          href={`/doc?id=${this.props.app.query.id}&catalogId=${item._id}`}>
+          <div className="tree-node" style={{display: 'flex', width: '100%'}}>
+          <span
+            className={`label ${item.published ? 'primary-text' : ''}`}
+          >
+            {item.name}
+            </span>
+
+          </div>
+        </Link>
+      ) : (
         <div className="tree-node" style={{display: 'flex', width: '100%'}}>
           <span
             className={`label ${item.published ? 'primary-text' : ''}`}
-            onClick={() => this.props.tourist.getPublishedDoc(item)}
           >
             {item.name}
             </span>
@@ -51,6 +75,7 @@ class Doc extends Component {
 
   render() {
     const {tourist} = this.props;
+    console.log(tourist);
     return (
       <div className="document-page">
         <div className="catalog">

@@ -14,8 +14,16 @@ export default class Tourist {
   @action
   async getPublishedDoc(catalog) {
     if (catalog.published) {
-      const {success, data} = await ajax({url: '/api/pub/doc/detail/catalog', data: {catalogId: catalog._id}})
+      const {success, data} = await ajax({
+        url: '/api/pub/doc/detail/catalog',
+        method: 'get',
+        data: {catalogId: catalog._id}
+      });
       if (success) this.document = data;
     }
+  }
+
+  @action clearContent() {
+    this.document = {};
   }
 }

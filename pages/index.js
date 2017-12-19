@@ -14,6 +14,10 @@ class Index extends React.Component {
     return {tourist: {modules: data}};
   }
 
+  componentDidMount(){
+    this.props.tourist.clearContent();
+  }
+
 
   render() {
     const {tourist} = this.props;
