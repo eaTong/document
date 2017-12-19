@@ -15,7 +15,7 @@ import staticCache from 'koa-static-cache';
 import serve from 'koa-static';
 import cors from 'koa-cors';
 
-const port = parseInt(process.env.PORT, 10) || 8080;
+const port = parseInt(process.env.PORT, 10) || 8090;
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({dev});
 const handle = nextApp.getRequestHandler();
