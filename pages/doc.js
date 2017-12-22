@@ -2,12 +2,11 @@
  * Created by eatong on 17-12-5.
  */
 import React, {Component} from 'react';
-import {Page} from '~components';
+import {Page, Title} from '~components';
 import Link from 'next/link';
 import {inject, observer} from 'mobx-react'
 import {Breadcrumb, Button, Tree} from 'antd';
 import ajax from "../util/ajaxUtil";
-import catalog from "./admin/document/catalog";
 
 const BreadcrumbItem = Breadcrumb.Item;
 const TreeNode = Tree.TreeNode;
@@ -78,6 +77,7 @@ class Doc extends Component {
     const {tourist, app} = this.props;
     return (
       <div className={`document-page ${tourist.showDoc ? 'show-doc' : 'show-catalog'}`}>
+        <Title>{`${tourist.document.catalog && tourist.document.catalog.name || ''}`}</Title>
         <div className="catalog">
           {tourist.catalog.length > 0 && (
             <Tree
@@ -90,7 +90,7 @@ class Doc extends Component {
         </div>
         <div className="content" dangerouslySetInnerHTML={{__html: tourist.document.content}}/>
         {!app.query.hideNav && (
-          <Link href={`/doc?id=${app.query.id}`}><a className="back-to-catalog" >返回目录</a></Link>
+          <Link href={`/doc?id=${app.query.id}`}><a className="back-to-catalog">返回目录</a></Link>
         )}
         <style jsx>{`
           .document-page{
