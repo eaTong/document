@@ -62,7 +62,9 @@ async function updateCatalog(data) {
 }
 
 async function authAddCatalog(data) {
-  if (await Catalog.findOne({thirdPartyKey: data.thirdPartyKey})) {
+  const a = await Catalog.findOne({thirdPartyKey: data.thirdPartyKey, module: data.moduleId});
+  console.log(a);
+  if (a) {
     throw new LogicError('thirdPartyKey should be unique');
   }
   let catalog, parent;
@@ -84,7 +86,7 @@ async function authAddCatalog(data) {
 }
 
 async function authUpdateCatalog(data) {
-  const catalog = await Catalog.findById(data.thirdPartyKey);
+  const catalog = await Catalog.findOne(data.thirdPartyKey);
   catalog.name = data.name;
   catalog.remark = data.remark;
   await catalog.save();
@@ -92,7 +94,7 @@ async function authUpdateCatalog(data) {
 }
 
 async function authDeleteCatalog(id) {
-  const catalog = await Catalog.findById(thirdPartyKey);
+  const catalog = await Catalog.findOne(thirdPartyKey);
   catalog.enable = false;
   await catalog.save();
   return catalog;

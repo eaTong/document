@@ -88,7 +88,7 @@ class Doc extends Component {
             </Tree>
           )}
         </div>
-        <div className="content" dangerouslySetInnerHTML={{__html: tourist.document.content}}/>
+        <div className="content ql-editor" dangerouslySetInnerHTML={{__html: tourist.document.content}}/>
         {!app.query.hideNav && (
           <Link href={`/doc?id=${app.query.id}`}><a className="back-to-catalog">返回目录</a></Link>
         )}
@@ -98,7 +98,7 @@ class Doc extends Component {
             padding:15px;
 
           }
-          .document-page.has-content .catalog{
+          .document-page .catalog{
             width:300px;
 
           }
