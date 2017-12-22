@@ -7,6 +7,7 @@ import Link from 'next/link';
 import {inject, observer} from 'mobx-react'
 import {Breadcrumb, Button, Tree} from 'antd';
 import ajax from "../util/ajaxUtil";
+import catalog from "./admin/document/catalog";
 
 const BreadcrumbItem = Breadcrumb.Item;
 const TreeNode = Tree.TreeNode;
@@ -16,7 +17,7 @@ const TreeNode = Tree.TreeNode;
 class Doc extends Component {
 
   static async init(ctx) {
-    const result = {tourist: {}};
+    const result = {tourist: {showDoc: !!ctx.query.catalogId}};
     const {data} = await ajax({url: '/api/pub/catalog/get', method: 'get', data: {moduleId: ctx.query.id}, ctx});
     result.tourist.catalog = data;
     if (ctx.query.catalogId) {
@@ -74,10 +75,9 @@ class Doc extends Component {
   }
 
   render() {
-    const {tourist} = this.props;
-    console.log(tourist);
+    const {tourist, app} = this.props;
     return (
-      <div className="document-page">
+      <div className={`document-page ${tourist.showDoc ? 'show-doc' : 'show-catalog'}`}>
         <div className="catalog">
           {tourist.catalog.length > 0 && (
             <Tree
@@ -89,6 +89,9 @@ class Doc extends Component {
           )}
         </div>
         <div className="content" dangerouslySetInnerHTML={{__html: tourist.document.content}}/>
+        {!app.query.hideNav && (
+          <Link href={`/doc?id=${app.query.id}`}><a className="back-to-catalog" >返回目录</a></Link>
+        )}
         <style jsx>{`
           .document-page{
             display:flex;
@@ -97,14 +100,21 @@ class Doc extends Component {
           }
           .document-page.has-content .catalog{
             width:300px;
-            transform:translateX(0);
 
           }
-          .document-page .catalog{
-            transform:translateX(0);
+          .document-page .back-to-catalog{
+            display:none;
+            position:fixed;
+            right:10px;
+            top:10px;
           }
-          .document-page .content{
-
+          @media screen and (max-width:600px){
+             .document-page{display:block;}
+             .document-page .catalog{width:100%;}
+             .document-page .content{width:100%;overflow-x:100%;}
+            .document-page.show-catalog .content{display:none;}
+            .document-page.show-doc .back-to-catalog{display:block;}
+            .document-page.show-doc .catalog{display:none;}
           }
         `}</style>
       </div>

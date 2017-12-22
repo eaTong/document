@@ -10,6 +10,7 @@ export default class Tourist {
   @observable modules = [];
   @observable catalog = [];
   @observable document = {};
+  @observable showDoc = true;
 
   @action
   async getPublishedDoc(catalog) {
