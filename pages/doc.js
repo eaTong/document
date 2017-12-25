@@ -99,7 +99,7 @@ class Doc extends Component {
 
           }
           .document-page .catalog{
-            width:300px;
+            min-width:200px;
 
           }
           .document-page .back-to-catalog{

@@ -31,6 +31,16 @@ async function getDocByCatalog(catalogId, shouldAddCount) {
   return {content: doc ? doc.content : '', catalog};
 }
 
+async function viewDocByThirdParty({thirdPartyKey, moduleId}, shouldAddCount) {
+  const catalog = await Catalog.findOne({thirdPartyKey, module: moduleId});
+  const doc = await Doc.findOne({catalog: catalog._id.toString()});
+  if (shouldAddCount) {
+    doc.viewCount = doc.viewCount ? doc.viewCount + 1 : 1;
+    await doc.save();
+  }
+  return {content: doc ? doc.content : '', catalog};
+}
+
 async function updateDoc(data, user) {
   let doc = await Doc.findOne({catalog: data.catalog});
   if (doc) {
@@ -73,4 +83,4 @@ async function publishDoc(data, user) {
   return doc;
 }
 
-export default {getDocs, addDoc, deleteDoc, updateDoc, publishDoc, getDocByCatalog}
+export default {getDocs, addDoc, deleteDoc, updateDoc, publishDoc, getDocByCatalog, viewDocByThirdParty}

@@ -35,13 +35,26 @@ export default class DocApi {
   static async viewDocByCatalog(ctx) {
     const {body} = ctx.request;
     const readDoc = ctx.session.readDoc || {};
-    const blogHasRead = readDoc[body.id];
+    const blogHasRead = readDoc[body.catalogId];
     if (!blogHasRead) {
-      readDoc[body.id] = true;
+      readDoc[body.catalogId] = true;
       ctx.session.readDoc = readDoc;
     }
     //if has read , should not add viewCount
     return await docServer.getDocByCatalog(body.catalogId, !blogHasRead);
+  }
+
+  @checkArgument(['thirdPartyKey', 'moduleId'])
+  static async viewDocByThirdParty(ctx) {
+    const {body} = ctx.request;
+    const readDoc = ctx.session.readDoc || {};
+    const blogHasRead = readDoc[body.thirdPartyKey];
+    if (!blogHasRead) {
+      readDoc[body.thirdPartyKey] = true;
+      ctx.session.readDoc = readDoc;
+    }
+    //if has read , should not add viewCount
+    return await docServer.viewDocByThirdParty({thirdPartyKey:body.thirdPartyKey,moduleId:body.moduleId}, !blogHasRead);
   }
 
   @checkArgument(['content', 'catalog'])
