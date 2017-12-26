@@ -62,9 +62,7 @@ async function updateCatalog(data) {
 }
 
 async function authAddCatalog(data) {
-  const a = await Catalog.findOne({thirdPartyKey: data.thirdPartyKey, module: data.moduleId});
-  console.log(a);
-  if (a) {
+  if (await Catalog.findOne({thirdPartyKey: data.thirdPartyKey, module: data.moduleId})) {
     throw new LogicError('thirdPartyKey should be unique');
   }
   let catalog, parent;
