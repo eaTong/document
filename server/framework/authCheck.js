@@ -41,6 +41,8 @@ export default async function checkAuth(ctx, next) {
       next();
     ctx.body = {success: true, data, message: ''};
   } catch (ex) {
+    ctx.logger.log('error', ex.message);
+    console.log(ex);
     if (ex instanceof ArgMissError) {
       ctx.status = 400;
       ctx.body = {success: false, data: {}, message: ex.message};
