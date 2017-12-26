@@ -1,7 +1,7 @@
 /**
  * Created by eatong on 17-11-30.
  */
-import mongoose, {Schema} from '../mongoConfig';
+const  {mongoose,Schema} = require('../mongoConfig');
 
 const CatalogSchema = new Schema({
   name: {type: String, required: true},
@@ -15,4 +15,4 @@ const CatalogSchema = new Schema({
   enable: {type: Boolean},
 }, {usePushEach: true});
 
-export default mongoose.model('catalog', CatalogSchema);
+module.exports =mongoose.model('catalog', CatalogSchema);

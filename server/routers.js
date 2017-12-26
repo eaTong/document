@@ -1,12 +1,12 @@
-import Router from 'koa-router';
-import {parse} from 'query-string';
-import TodoApi from './apis/todoApi';
-import UserApi from './apis/userApi';
-import moduleApi from './apis/moduleApi';
-import catalogApi from './apis/catalogApi';
-import docApi from './apis/docApi';
+const Router = require('koa-router');
+const {parse} = require('query-string');
+const TodoApi = require('./apis/todoApi');
+const UserApi = require('./apis/userApi');
+const moduleApi = require('./apis/moduleApi');
+const catalogApi = require('./apis/catalogApi');
+const docApi = require('./apis/docApi');
 
-import authCheck from './framework/authCheck';
+const authCheck = require('./framework/authCheck');
 
 const router = new Router();
 router.get(/^\/api/, async (ctx, next) => {
@@ -63,4 +63,4 @@ router.get('/api/*', async ctx => {
   ctx.body = 'api not found';
 });
 
-export default router;
+module.exports =router;

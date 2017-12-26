@@ -1,7 +1,7 @@
 /**
  * Created by eatong on 17-11-28.
  */
-import mongoose, {Schema} from '../mongoConfig';
+const  {mongoose,Schema} = require('../mongoConfig');
 
 const UserSchema = new Schema({
   account: String,
@@ -10,4 +10,4 @@ const UserSchema = new Schema({
   enable: Boolean,
 });
 
-export default mongoose.model('User', UserSchema);
+module.exports =mongoose.model('User', UserSchema);

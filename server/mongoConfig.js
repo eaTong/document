@@ -11,5 +11,4 @@ connection.once('open', () => {
   console.log('Success connected to mongodb');
 });
 const Schema = mongoose.Schema;
-export default mongoose;
-export {Schema, connection};
+module.exports = {mongoose, Schema, connection};

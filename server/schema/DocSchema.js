@@ -1,7 +1,7 @@
 /**
  * Created by eatong on 17-11-4.
  */
-import mongoose, {Schema} from '../mongoConfig';
+const  {mongoose,Schema} = require('../mongoConfig');
 
 const DocSchema = new Schema({
   content: {type: String},
@@ -15,4 +15,4 @@ const DocSchema = new Schema({
   lastPublishUser: {type: String, ref: 'user'},
 });
 
-export default mongoose.model('doc', DocSchema);
+module.exports =mongoose.model('doc', DocSchema);

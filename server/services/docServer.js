@@ -1,9 +1,9 @@
 /**
  * Created by eatong on 17-11-29.
  */
-import Doc from '../schema/DocSchema';
-import Catalog from '../schema/CatalogSchema';
-import {LogicError} from "../framework/errors";
+const Doc = require('../schema/DocSchema');
+const Catalog = require('../schema/CatalogSchema');
+const {LogicError} = require('../framework/errors');
 
 async function getDocs() {
   return await Doc.find({enable: {$ne: false}});
@@ -83,4 +83,4 @@ async function publishDoc(data, user) {
   return doc;
 }
 
-export default {getDocs, addDoc, deleteDoc, updateDoc, publishDoc, getDocByCatalog, viewDocByThirdParty}
+module.exports ={getDocs, addDoc, deleteDoc, updateDoc, publishDoc, getDocByCatalog, viewDocByThirdParty}

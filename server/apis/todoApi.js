@@ -1,20 +1,20 @@
-import {checkArgument} from '../framework/apiDecorator';
-import todoServer from '../services/todoServer';
+const {checkArgument} = require('../framework/apiDecorator');
+const todoServer = require('../services/todoServer');
 
 
-export default class TodoApi {
+module.exports =class TodoApi {
 
   static async getTodo(ctx) {
     return await todoServer.findAllTodo();
   }
 
-  @checkArgument('name')
+  // @checkArgument('name')
   static async addTodo(ctx) {
     const data = ctx.request.body;
     return await todoServer.addTodo(data.name);
   }
 
-  @checkArgument('_id')
+  // @checkArgument('_id')
   static async toggleTodo(ctx) {
     const data = ctx.request.body;
     return await todoServer.toggleTodo(data._id);

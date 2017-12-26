@@ -1,7 +1,7 @@
 /**
  * Created by eatong on 17-11-4.
  */
-import Todo from '../schema/TodoSchema';
+const Todo = require('../schema/TodoSchema');
 
 async function findAllTodo() {
   return await Todo.find();
@@ -19,6 +19,6 @@ async function toggleTodo(_id) {
   return todo;
 }
 
-export default {
+module.exports ={
   findAllTodo, addTodo, toggleTodo
 }

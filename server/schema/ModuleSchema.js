@@ -1,7 +1,7 @@
 /**
  * Created by eatong on 17-11-29.
  */
-import mongoose, {Schema} from '../mongoConfig';
+const  {mongoose,Schema} = require('../mongoConfig');
 
 const ModuleSchema = new Schema({
   name: String,
@@ -9,4 +9,4 @@ const ModuleSchema = new Schema({
   enable: Boolean,
 });
 
-export default mongoose.model('module', ModuleSchema);
+module.exports =mongoose.model('module', ModuleSchema);

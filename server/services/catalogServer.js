@@ -1,9 +1,9 @@
 /**
  * Created by eatong on 17-11-29.
  */
-import Catalog from '../schema/CatalogSchema';
-import Doc from '../schema/DocSchema';
-import {LogicError} from "../framework/errors";
+const Catalog = require('../schema/CatalogSchema');
+const Doc = require('../schema/DocSchema');
+const {LogicError} = require('../framework/errors');
 
 async function getCatalogs(moduleId) {
   const catalogs = await Catalog.find({
@@ -99,7 +99,7 @@ async function authDeleteCatalog(id) {
 
 }
 
-export default {
+module.exports ={
   getCatalogs,
   addCatalog,
   deleteCatalog,

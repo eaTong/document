@@ -1,7 +1,7 @@
 /**
  * Created by eatong on 17-11-29.
  */
-import Module from '../schema/ModuleSchema';
+const Module = require('../schema/ModuleSchema');
 
 async function getModules() {
   return await Module.find({enable: {$ne: false}});
@@ -29,4 +29,4 @@ async function updateModule(data) {
 
 }
 
-export default {getModules, addModule, deleteModule, updateModule}
+module.exports ={getModules, addModule, deleteModule, updateModule}

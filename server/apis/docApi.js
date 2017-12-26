@@ -1,11 +1,11 @@
 /**
  * Created by eatong on 17-11-29.
  */
-import {checkArgument} from '../framework/apiDecorator';
-import {LogicError} from '../framework/errors';
-import docServer from '../services/docServer';
+const {checkArgument} = require('../framework/apiDecorator');
+const {LogicError} = require('../framework/errors');
+const docServer = require('../services/docServer');
 
-export default class DocApi {
+module.exports =class DocApi {
 
   static async getDocs() {
     return await docServer.getDocs();
@@ -17,21 +17,21 @@ export default class DocApi {
 
   }
 
-  @checkArgument('id')
+  // @checkArgument('id')
   static async deleteDoc(ctx) {
     const data = ctx.request.body;
     return await docServer.deleteDoc(data.id);
 
   }
 
-  @checkArgument('catalogId')
+  // @checkArgument('catalogId')
   static async getDocByCatalog(ctx) {
     const data = ctx.request.body;
     return await docServer.getDocByCatalog(data.catalogId);
 
   }
 
-  @checkArgument('catalogId')
+  // @checkArgument('catalogId')
   static async viewDocByCatalog(ctx) {
     const {body} = ctx.request;
     const readDoc = ctx.session.readDoc || {};
@@ -44,7 +44,7 @@ export default class DocApi {
     return await docServer.getDocByCatalog(body.catalogId, !blogHasRead);
   }
 
-  @checkArgument(['thirdPartyKey', 'moduleId'])
+  // @checkArgument(['thirdPartyKey', 'moduleId'])
   static async viewDocByThirdParty(ctx) {
     const {body} = ctx.request;
     const readDoc = ctx.session.readDoc || {};
@@ -57,14 +57,14 @@ export default class DocApi {
     return await docServer.viewDocByThirdParty({thirdPartyKey:body.thirdPartyKey,moduleId:body.moduleId}, !blogHasRead);
   }
 
-  @checkArgument(['content', 'catalog'])
+  // @checkArgument(['content', 'catalog'])
   static async updateDoc(ctx) {
     const data = ctx.request.body;
     return await docServer.updateDoc(data, ctx.session.loginUser);
 
   }
 
-  @checkArgument(['content', 'catalog'])
+  // @checkArgument(['content', 'catalog'])
   static async publishDoc(ctx) {
     const data = ctx.request.body;
     return await docServer.publishDoc(data, ctx.session.loginUser);

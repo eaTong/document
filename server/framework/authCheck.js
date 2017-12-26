@@ -1,10 +1,10 @@
 /**
  * Created by eatong on 17-12-16.
  */
-import {ArgMissError, LogicError} from './errors';
-import userServer from "../services/userServer";
+const {ArgMissError, LogicError} = require('./errors');
+const userServer = require('../services/userServer');
 
-export default async function checkAuth(ctx, next) {
+module.exports =async function checkAuth(ctx, next) {
   if (!/^\/api\/pub/.test(ctx.originalUrl) && ctx.originalUrl !== '/api/user/login') {
     if (/^\/api\/auth/.test(ctx.originalUrl)) {
       if (ctx.req.headers['auth']) {
