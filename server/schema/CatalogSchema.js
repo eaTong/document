@@ -13,6 +13,6 @@ const CatalogSchema = new Schema({
   hasDoc: {type: Boolean},
   published: {type: Boolean},
   enable: {type: Boolean},
-});
+}, {usePushEach: true});
 
 export default mongoose.model('catalog', CatalogSchema);
