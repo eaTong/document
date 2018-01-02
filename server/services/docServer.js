@@ -32,8 +32,8 @@ async function getDocByCatalog(catalogId, shouldAddCount) {
 }
 
 async function viewDocByThirdParty({thirdPartyKey, moduleId}, shouldAddCount) {
-  const catalog = await Catalog.findOne({thirdPartyKey, module: moduleId});
-  const doc = await Doc.findOne({catalog: catalog._id.toString(), published: true});
+  const catalog = await Catalog.findOne({thirdPartyKey, module: moduleId, published: true});
+  const doc = await Doc.findOne({catalog: catalog._id.toString()});
   if (shouldAddCount && doc) {
     doc.viewCount = doc.viewCount ? doc.viewCount + 1 : 1;
     await doc.save();
