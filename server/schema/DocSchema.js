@@ -13,6 +13,6 @@ const DocSchema = new Schema({
   publishedDoc: {type: String},
   publishHistory: {type: Array,},
   lastPublishUser: {type: String, ref: 'user'},
-});
+}, {usePushEach: true});
 
 module.exports =mongoose.model('doc', DocSchema);

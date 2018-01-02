@@ -7,6 +7,6 @@ const ModuleSchema = new Schema({
   name: String,
   remark: String,
   enable: Boolean,
-});
+}, {usePushEach: true});
 
 module.exports =mongoose.model('module', ModuleSchema);
