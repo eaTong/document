@@ -14,11 +14,11 @@ const {connection} = require('./mongoConfig');
 const staticCache = require('koa-static-cache');
 const serve = require('koa-static');
 const cors = require('koa-cors');
+const routes = require('../page-routes');
 
 const port = parseInt(process.env.PORT, 10) || 8090;
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({dev});
-const handle = nextApp.getRequestHandler();
 //define logger
 const logger = createLogger({
   level: 'info',
@@ -73,10 +73,11 @@ nextApp.prepare().then(() => {
     }
   });
 
-  //next handle all router
-  router.get('*', async ctx => {
-    await handle(ctx.req, ctx.res);
-    ctx.respond = false
+  const handler = routes.getRequestHandler(nextApp);
+  app.use(ctx => {
+    ctx.respond = false;
+    ctx.res.statusCode = 200; // because koa defaults to 404
+    handler(ctx.req, ctx.res)
   });
 
   app.listen(port, (err) => {

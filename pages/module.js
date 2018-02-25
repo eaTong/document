@@ -13,7 +13,7 @@ const TreeNode = Tree.TreeNode;
 
 
 @inject('tourist', 'app') @observer
-class Doc extends Component {
+class Module extends Component {
 
   static async init(ctx) {
     const {catalogId, id} = ctx.query;
@@ -125,5 +125,5 @@ class Doc extends Component {
   }
 }
 
-Doc.propTypes = {};
-export default Page(Doc);
+Module.propTypes = {};
+export default Page(Module);

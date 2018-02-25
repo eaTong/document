@@ -1,10 +1,8 @@
 import React from 'react'
-import Link from 'next/link';
-import Head from 'next/head'
 import {inject, observer} from 'mobx-react';
 import ajax from '../util/ajaxUtil';
 import {Page, Title} from '../components';
-import {Card} from 'antd';
+import {Link} from '../page-routes'
 
 @inject('tourist') @observer
 class Index extends React.Component {
@@ -14,7 +12,7 @@ class Index extends React.Component {
     return {tourist: {modules: data}};
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.tourist.clearContent();
   }
 
@@ -25,7 +23,7 @@ class Index extends React.Component {
       <div className="module-list">
         {tourist.modules.map(item => (
           <div className="module-item" key={item._id || 1}>
-            <div className="title"><Link href={`/doc?id=${item._id}`}><a>{item.name}</a></Link></div>
+            <div className="title"><Link route='module' params={{id: item._id}}><a>{item.name}</a></Link></div>
             <div className="remark">{item.remark}</div>
           </div>
         ))}
