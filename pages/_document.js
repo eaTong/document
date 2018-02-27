@@ -18,8 +18,9 @@ export default class MyDocument extends Document {
               type="text/css"
               href={`/app.css?${this.props.__NEXT_DATA__.buildStats['app.js'].hash}`}
             />
-            <meta name="baidu-site-verification" content="nna0vPhBVD" />
-            <meta name="360-site-verification" content="374f09ee579bd8dfecff46165447f479" />
+            <meta name="Keywords" content="云智装,家装管理,互联网家装,装修ERP,文档,云智装文档,云智装帮助系统"/>
+            <meta name="baidu-site-verification" content="nna0vPhBVD"/>
+            <meta name="360-site-verification" content="374f09ee579bd8dfecff46165447f479"/>
             <meta name="sogou_site_verification" content="bhZ35wQtpb"/>
           </Head>
         ) : (

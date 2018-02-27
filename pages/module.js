@@ -37,21 +37,17 @@ class Module extends Component {
     const {id} = this.props.app.query;
     return data.map((item) => {
       const treeTitle = item.published ? (
-        <Link route='doc' params={{id: id || '', catalogId: item._id || ''}}>
-          <div className="tree-node" style={{display: 'flex', width: '100%'}}>
-          <span
-            className={`label ${item.published ? 'primary-text' : ''}`}
-          >
-            {item.name}
-            </span>
+        <div className="tree-node" style={{display: 'flex', width: '100%'}}>
+          <Link route='doc' params={{id: id || '', catalogId: item._id || ''}}>
+            <a className={`label ${item.published ? 'primary-text' : ''}`}>
+              {item.name}
+            </a>
+          </Link>
 
-          </div>
-        </Link>
+        </div>
       ) : (
         <div className="tree-node" style={{display: 'flex', width: '100%'}}>
-          <span
-            className={`label ${item.published ? 'primary-text' : ''}`}
-          >
+          <span className={`label ${item.published ? 'primary-text' : ''}`}>
             {item.name}
             </span>
         </div>
@@ -68,8 +64,7 @@ class Module extends Component {
           </TreeNode>
         );
       }
-      return <TreeNode
-        title={treeTitle} key={item._id} catalog={item} selectable={false}/>;
+      return <TreeNode title={treeTitle} key={item._id} catalog={item} selectable={false}/>;
     });
 
   }

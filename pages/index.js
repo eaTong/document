@@ -21,6 +21,7 @@ class Index extends React.Component {
     const {tourist} = this.props;
     return (
       <div className="module-list">
+        <Title>首页</Title>
         {tourist.modules.map(item => (
           <div className="module-item" key={item._id || 1}>
             <div className="title"><Link route='module' params={{id: item._id}}><a>{item.name}</a></Link></div>

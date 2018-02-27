@@ -7,7 +7,7 @@ import Head from 'next/head'
 const Title = props => {
   return (
     <Head>
-      <title>{props.children}</title>
+      <title>云智装文档-{props.children}</title>
     </Head>
   )
 };
