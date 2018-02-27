@@ -18,6 +18,9 @@ export default class MyDocument extends Document {
               type="text/css"
               href={`/app.css?${this.props.__NEXT_DATA__.buildStats['app.js'].hash}`}
             />
+            <meta name="baidu-site-verification" content="nna0vPhBVD" />
+            <meta name="360-site-verification" content="374f09ee579bd8dfecff46165447f479" />
+            <meta name="sogou_site_verification" content="bhZ35wQtpb"/>
           </Head>
         ) : (
           <Head>
