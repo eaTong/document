@@ -4,7 +4,6 @@
 import Document, {Head, Main, NextScript} from 'next/document';
 import appStyle from '../styles/app.less';
 import quillStyle from 'react-quill/dist/quill.snow.css';
-import flush from 'styled-jsx/server'
 
 export default class MyDocument extends Document {
   render() {
