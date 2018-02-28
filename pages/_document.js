@@ -5,6 +5,13 @@ import Document, {Head, Main, NextScript} from 'next/document';
 import appStyle from '../styles/app.less';
 import quillStyle from 'react-quill/dist/quill.snow.css';
 
+const bdTj = `var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b69c768893587a42c887e5f422ad8ad6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();`;
 export default class MyDocument extends Document {
   render() {
     return (
@@ -22,6 +29,7 @@ export default class MyDocument extends Document {
             <meta name="baidu-site-verification" content="nna0vPhBVD"/>
             <meta name="360-site-verification" content="374f09ee579bd8dfecff46165447f479"/>
             <meta name="sogou_site_verification" content="bhZ35wQtpb"/>
+            <script dangerouslySetInnerHTML={{__html: bdTj}}/>
           </Head>
         ) : (
           <Head>
