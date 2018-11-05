@@ -59,7 +59,7 @@ nextApp.prepare().then(() => {
 //cross origin
   app.use(cors({methods: 'GET'}));
   //use body to resolve data
-  app.use(body({multipart: true}));
+  app.use(body({multipart: true, jsonLimit: '20mb', textLimit: '20mb'}));
 
 //all routes just all API
   app.use(router.routes());
