@@ -111,11 +111,10 @@ class Doc extends Component {
             top:10px;
           }
           @media screen and (max-width:600px){
-             .document-page{display:block;}
+             .document-page{display:block;padding:0;}
              .document-page .catalog{width:100%;}
-             .document-page .content{width:100%;overflow-x:100%;}
+             .document-page .content{width:100%;overflow-x:hidden;}
             .document-page.show-catalog .content{display:none;}
-            .document-page.show-doc .back-to-catalog{display:block;}
             .document-page.show-doc .catalog{display:none;}
           }
         `}</style>
