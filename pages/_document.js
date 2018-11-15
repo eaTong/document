@@ -29,6 +29,7 @@ export default class MyDocument extends Document {
             <meta name="baidu-site-verification" content="nna0vPhBVD"/>
             <meta name="360-site-verification" content="374f09ee579bd8dfecff46165447f479"/>
             <meta name="sogou_site_verification" content="bhZ35wQtpb"/>
+            <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
             <meta name="google-site-verification" content="fCT2qrDVSOhaeGYxHyQgsc1Mp9mPcerayecQ6rW1n0c" />
             <script dangerouslySetInnerHTML={{__html: bdTj}}/>
           </Head>
