@@ -90,7 +90,7 @@ class Doc extends Component {
           )}
         </div>
         <div className="content ql-editor" dangerouslySetInnerHTML={{__html: tourist.document.content}}/>
-        {!app.query.hideNav && (
+        {app.query.enableNav && (
           <Link href={`/doc?id=${app.query.id}`}><a className="back-to-catalog">返回目录</a></Link>
         )}
         <style jsx>{`
