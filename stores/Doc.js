@@ -17,19 +17,19 @@ export default class Doc {
 
 
   @action
-  async saveDoc() {
+  async saveDoc(content) {
     const {success, data} = await ajax({
       url: '/api/doc/update',
-      data: {content: this.content, catalog: stores.app.query.catalogId}
+      data: {content, catalog: stores.app.query.catalogId}
     });
     if (success) message.success('编辑文档成功');
   }
 
   @action
-  async publishDoc() {
+  async publishDoc(content) {
     const {success, data} = await ajax({
       url: '/api/doc/publish',
-      data: {content: this.content, catalog: stores.app.query.catalogId}
+      data: {content, catalog: stores.app.query.catalogId}
     });
     if (success) message.success('发布文档成功');
   }

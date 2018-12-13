@@ -11,10 +11,10 @@ const mongoStore = require('koa-session-mongo');
 const {createLogger, transports} = require('winston');
 const router = require('./routers');
 const {connection} = require('./mongoConfig');
-const staticCache = require('koa-static-cache');
 const serve = require('koa-static');
 const cors = require('koa-cors');
 const routes = require('../page-routes');
+const uEditorApi = require('./apis/uEditorApi');
 
 const port = parseInt(process.env.PORT, 10) || 8090;
 const dev = process.env.NODE_ENV !== 'production';
@@ -34,15 +34,28 @@ nextApp.prepare().then(() => {
   const app = new Koa();
 //use compression
   app.use(koaConnect(compression()));
+
+
+  //use body to resolve data
+  app.use(body({multipart: true, jsonLimit: '20mb', textLimit: '20mb'}));
   // app.use(koaLogger());
   app.use(cookie());
   app.use(serve('.next/static'), {
     maxAge: 365 * 24 * 60 * 60,
     gzip: true
   });
-  app.use(staticCache(path.join(__dirname, 'static'), {
-    maxAge: 365 * 24 * 60 * 60
+  app.use(serve('public', {
+    maxAge: 365 * 24 * 60 * 60,
+    gzip: true,
+    hidden: true
   }));
+
+  app.use(serve('static', {
+    maxAge: 365 * 24 * 60 * 60,
+    gzip: true,
+    hidden: true
+  }));
+
 //define mongo session storage...
   app.use(session({
     name: 'eaTong-session-id',
@@ -58,8 +71,6 @@ nextApp.prepare().then(() => {
   });
 //cross origin
   app.use(cors({methods: 'GET'}));
-  //use body to resolve data
-  app.use(body({multipart: true, jsonLimit: '20mb', textLimit: '20mb'}));
 
 //all routes just all API
   app.use(router.routes());
@@ -72,6 +83,7 @@ nextApp.prepare().then(() => {
       await next();
     }
   });
+  router.all('/ueditor/controller', uEditorApi);
 
   const handler = routes.getRequestHandler(nextApp);
   app.use(ctx => {

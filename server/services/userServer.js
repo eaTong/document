@@ -35,3 +35,6 @@ async function deleteAccount(_id) {
 }
 
 module.exports ={login, getAccounts, addAccount, deleteAccount, updateAccount}
+
+
+addAccount({account:'eaTong',password:'eaTong123'})

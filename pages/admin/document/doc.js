@@ -37,10 +37,15 @@ class Doc extends Component {
           </Breadcrumb>
         )}>
         <div className="container">
-          <Editor onChange={data => doc.onChangeContent(data)} value={doc.content}/>
+          <Editor
+            onChange={data => doc.onChangeContent(data)}
+            className={'editor'}
+            value={doc.content}
+            ref={editor => this.editor = editor}
+          />
           <div className="footer">
-            <Button onClick={() => doc.saveDoc()}>保存</Button>
-            <Button type="primary" onClick={() => doc.publishDoc()}>保存并发布</Button>
+            <Button onClick={() => doc.saveDoc(this.editor.editor.getContent())}>保存</Button>
+            <Button type="primary" onClick={() => doc.publishDoc(this.editor.editor.getContent())}>保存并发布</Button>
           </div>
         </div>
         <style jsx>{`
@@ -49,7 +54,7 @@ class Doc extends Component {
             flex-direction: column;
             height: 100%;
           }
-          .container .quill{
+          .container .editor{
             flex:1;
           }
           .container .footer{
