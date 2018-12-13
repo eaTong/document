@@ -12,7 +12,6 @@ class Editor extends Component {
     this.setState({mounted: true, value: this.props.value, unionKey: `editor-container-${Math.random()}`});
     const bdPath = '/ueditor/';
     createScript(bdPath + 'ueditor.config.js')
-      .then(() => createScript(bdPath + 'ueditor.config.js'))
       .then(() => createScript(bdPath + 'ueditor.all.js'))
       .then(() => createScript(bdPath + 'lang/zh-cn/zh-cn.js'))
       .then(() => {
@@ -23,7 +22,7 @@ class Editor extends Component {
           toolbars: [
             [
               'source', //源代码
-              'anchor', //锚点
+              // 'anchor', //锚点
               'undo', //撤销
               'redo', //重做
               'bold', //加粗
@@ -39,37 +38,38 @@ class Editor extends Component {
               'blockquote', //引用
               'pasteplain', //纯文本粘贴模式
               'selectall', //全选
-              'print', //打印
-              'preview', //预览
+              // 'print', //打印
+              // 'preview', //预览
               'horizontal', //分隔线
               'removeformat', //清除格式
               'time', //时间
               'date', //日期
               'link', //超链接
               'unlink', //取消链接
-              'insertrow', //前插入行
-              'insertcol', //前插入列
-              'mergeright', //右合并单元格
-              'mergedown', //下合并单元格
-              'deleterow', //删除行
-              'deletecol', //删除列
-              'splittorows', //拆分成行
-              'splittocols', //拆分成列
-              'splittocells', //完全拆分单元格
-              'deletecaption', //删除表格标题
-              'inserttitle', //插入标题
-              'mergecells', //合并多个单元格
-              'deletetable', //删除表格
-              'cleardoc', //清空文档
-              'insertparagraphbeforetable', //"表格前插入行"
+              //'inserttable', //插入表格
+              // 'insertrow', //前插入行
+              // 'insertcol', //前插入列
+              // 'mergeright', //右合并单元格
+              // 'mergedown', //下合并单元格
+              // 'deleterow', //删除行
+              // 'deletecol', //删除列
+              // 'splittorows', //拆分成行
+              // 'splittocols', //拆分成列
+              // 'splittocells', //完全拆分单元格
+              // 'deletecaption', //删除表格标题
+              // 'inserttitle', //插入标题
+              // 'mergecells', //合并多个单元格
+              // 'deletetable', //删除表格
+              // 'cleardoc', //清空文档
+              // 'insertparagraphbeforetable', //"表格前插入行"
               //'insertcode', //代码语言
-              // 'fontfamily', //字体
+              'fontfamily', //字体
               'fontsize', //字号
               'paragraph', //段落格式
               'simpleupload', //单图上传
               //'insertimage', //多图上传
-              'edittable', //表格属性
-              'edittd', //单元格属性
+              // 'edittable', //表格属性
+              // 'edittd', //单元格属性
               //'emotion', //表情
               //'spechars', //特殊字符
               //'searchreplace', //查询替换
@@ -98,11 +98,11 @@ class Editor extends Component {
               //'wordimage', //图片转存
               'lineheight', //行间距
               //'edittip ', //编辑提示
-              //'customstyle', //自定义标题
+              'customstyle', //自定义标题
               //'autotypeset', //自动排版
               //'touppercase', //字母大写
               //'tolowercase', //字母小写
-              //'background', //背景
+              // 'background', //背景
             ]
           ],
           //自动保存
@@ -128,11 +128,6 @@ class Editor extends Component {
         }
       });
 
-  }
-
-  handleChange(value) {
-    this.setState({value});
-    this.props.onChange && this.props.onChange(value);
   }
 
   render() {

@@ -44,7 +44,6 @@ class Doc extends Component {
             ref={editor => this.editor = editor}
           />
           <div className="footer">
-            <Button onClick={() => doc.saveDoc(this.editor.editor.getContent())}>保存</Button>
             <Button type="primary" onClick={() => doc.publishDoc(this.editor.editor.getContent())}>保存并发布</Button>
           </div>
         </div>
