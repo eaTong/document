@@ -11,7 +11,8 @@ class Editor extends Component {
 
     this.setState({mounted: true, value: this.props.value, unionKey: `editor-container-${Math.random()}`});
     const bdPath = '/ueditor/';
-    createScript(bdPath + 'ueditor.all.js')
+    createScript(bdPath + 'ueditor.config.js')
+      .then(() => createScript(bdPath + 'ueditor.all.js'))
       .then(() => createScript(bdPath + 'lang/zh-cn/zh-cn.js'))
       .then(() => {
         const width = findDOMNode(this.container).offsetWidth;
