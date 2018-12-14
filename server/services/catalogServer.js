@@ -72,7 +72,7 @@ async function authAddCatalog(data) {
   catalog.icon = data.icon;
   catalog.thirdPartyKey = data.thirdPartyKey;
   if (data.parent) {
-    parent = await Catalog.findOne({thirdPartyKey: data.parent});
+    parent = await Catalog.findOne({thirdPartyKey: data.parent, module: data.moduleId});
     catalog.level = parent ? parent.level + 1 : 0;
   } else {
     catalog.level = 0;
