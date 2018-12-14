@@ -3,7 +3,6 @@
  */
 import Document, {Head, Main, NextScript} from 'next/document';
 import appStyle from '../styles/app.less';
-import quillStyle from 'react-quill/dist/quill.snow.css';
 
 const bdTj = `var _hmt = _hmt || [];
 (function() {
@@ -36,7 +35,6 @@ export default class MyDocument extends Document {
         ) : (
           <Head>
             <style global dangerouslySetInnerHTML={{__html: appStyle}}/>
-            <style global dangerouslySetInnerHTML={{__html: quillStyle}}/>
           </Head>
         )}
       <body>
