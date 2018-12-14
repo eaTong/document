@@ -64,7 +64,7 @@ async function updateCatalog(data) {
 
 async function authAddCatalog(data) {
   if (await Catalog.findOne({thirdPartyKey: data.thirdPartyKey, module: data.moduleId})) {
-    throw new LogicError('thirdPartyKey should be unique');
+    throw new LogicError(`thirdPartyKey should be unique,info:{key:${data.thirdPartyKey},parent:{${data.parent}}`);
   }
   let catalog, parent;
   catalog = new Catalog(data);
@@ -102,7 +102,7 @@ async function authDeleteCatalog(id) {
 
 }
 
-module.exports ={
+module.exports = {
   getCatalogs,
   addCatalog,
   deleteCatalog,
