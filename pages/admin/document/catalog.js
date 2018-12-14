@@ -12,13 +12,20 @@ import ajax from "../../../util/ajaxUtil";
 const BreadcrumbItem = Breadcrumb.Item;
 const TreeNode = Tree.TreeNode;
 const ButtonGroup = Button.Group;
+const LAST_EXPANDED_KEYS = 'lastExpandedKeys';
 
 @inject('catalog') @observer
 class Catalog extends Component {
 
   static async init(ctx) {
+
     const {data} = await ajax({url: '/api/catalog/get', data: {moduleId: ctx.query.moduleId}, ctx});
-    return {catalog: {itemList: data}};
+    return {catalog: {itemList: data, query: ctx.query}};
+  }
+
+  componentDidMount() {
+    const expandedKeys = JSON.parse(localStorage.getItem(LAST_EXPANDED_KEYS + this.props.catalog.query.moduleId) || '[]');
+    this.props.catalog.onExpand(expandedKeys);
   }
 
   renderTreeNodes(data) {
@@ -36,12 +43,12 @@ class Catalog extends Component {
       );
       if (item.children && item.children.length > 0) {
         return (
-          <TreeNode title={treeTitle} key={item._id} catalog={item}>
+          <TreeNode icon={<Icon type={item.icon}/>} title={treeTitle} key={item._id} catalog={item}>
             {this.renderTreeNodes(item.children)}
           </TreeNode>
         );
       }
-      return <TreeNode title={treeTitle} key={item._id} catalog={item}/>;
+      return <TreeNode icon={<Icon type={item.icon}/>} title={treeTitle} key={item._id} catalog={item}/>;
     });
 
   }
@@ -74,7 +81,8 @@ class Catalog extends Component {
           <Tree
             autoExpandParent
             showLine
-            defaultExpandAll
+            expandedKeys={catalog.expandedKeys}
+            onExpand={expandedKeys => catalog.onExpand(expandedKeys)}
             onSelect={(keys, node) => catalog.onSelectCatalog(keys, node)}
           >
             {this.renderTreeNodes(catalog.itemList)}

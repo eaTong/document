@@ -7,7 +7,9 @@ import {message} from "antd/lib/index";
 import stores from './index'
 
 export default class Catelog {
+  @observable query = {};
   @observable itemList = [];
+  @observable expandedKeys = [];
   @observable operateType = 'add';
   @observable showCatalogModal = false;
   @observable currentCatalog = {};
@@ -19,6 +21,13 @@ export default class Catelog {
     } else {
       this.currentCatalog = {};
     }
+  }
+
+  @action
+  onExpand(expandedKeys) {
+    this.expandedKeys = expandedKeys;
+    const LAST_EXPANDED_KEYS = 'lastExpandedKeys';
+    window.localStorage.setItem(LAST_EXPANDED_KEYS + this.query.moduleId, JSON.stringify(expandedKeys))
   }
 
   @action

@@ -69,6 +69,7 @@ async function authAddCatalog(data) {
   let catalog, parent;
   catalog = new Catalog(data);
   catalog.module = data.moduleId;
+  catalog.icon = data.icon;
   catalog.thirdPartyKey = data.thirdPartyKey;
   if (data.parent) {
     parent = await Catalog.findOne({thirdPartyKey: data.parent});
@@ -88,6 +89,7 @@ async function authUpdateCatalog(data) {
   const catalog = await Catalog.findOne(data.thirdPartyKey);
   catalog.name = data.name;
   catalog.remark = data.remark;
+  catalog.icon = data.icon;
   await catalog.save();
   return catalog;
 }
@@ -108,4 +110,4 @@ module.exports ={
   authAddCatalog,
   authUpdateCatalog,
   authDeleteCatalog
-}
+};

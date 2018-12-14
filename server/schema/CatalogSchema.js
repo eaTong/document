@@ -1,11 +1,12 @@
 /**
  * Created by eatong on 17-11-30.
  */
-const  {mongoose,Schema} = require('../mongoConfig');
+const {mongoose, Schema} = require('../mongoConfig');
 
 const CatalogSchema = new Schema({
   name: {type: String, required: true},
   comment: {type: String},
+  icon: {type: String},
   level: {type: Number},
   thirdPartyKey: {type: String},
   children: {type: Array, ref: this},
@@ -15,4 +16,4 @@ const CatalogSchema = new Schema({
   enable: {type: Boolean},
 }, {usePushEach: true});
 
-module.exports =mongoose.model('catalog', CatalogSchema);
+module.exports = mongoose.model('catalog', CatalogSchema);
