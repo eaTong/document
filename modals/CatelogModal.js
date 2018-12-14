@@ -57,6 +57,14 @@ class CatelogModal extends Component {
               <Input/>
             )}
           </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="第三方key"
+            >
+            {getFieldDecorator('thirdPartyKey')(
+              <Input/>
+            )}
+          </FormItem>
         </Form>
       </Modal>
     );

@@ -55,6 +55,7 @@ async function deleteCatalog(id) {
 async function updateCatalog(data) {
   const catalog = await Catalog.findById(data.id);
   catalog.name = data.name;
+  catalog.thirdPartyKey = data.thirdPartyKey;
   catalog.remark = data.remark;
   await catalog.save();
   return catalog;
