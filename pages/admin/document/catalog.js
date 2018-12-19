@@ -6,7 +6,7 @@ import {Page, AdminLayout} from '~components';
 import CatalogModal from '../../../modals/CatelogModal';
 import Link from 'next/link';
 import {inject, observer} from 'mobx-react';
-import {Breadcrumb, Button, Icon, Tree} from 'antd';
+import {Badge, Breadcrumb, Button, Icon, Tree} from 'antd';
 import ajax from "../../../util/ajaxUtil";
 
 const BreadcrumbItem = Breadcrumb.Item;
@@ -34,9 +34,11 @@ class Catalog extends Component {
         <div className="tree-node" style={{display: 'flex', width: '100%'}}>
           <span className="label">
             {item.name}
+
             {item.hasDoc && (<Icon type={'check'} className={'success-text'}/>)}
           </span>
           <span className="extensional">
+            <span className="sort">{item.sort}</span>
             <Link href={`/admin/document/doc?catalogId=${item._id}`}><a>查看/编写</a></Link>
           </span>
         </div>
@@ -48,9 +50,10 @@ class Catalog extends Component {
           </TreeNode>
         );
       }
-      return <TreeNode icon={<Icon type={item.icon}/>} title={treeTitle} key={item._id} catalog={item}/>;
+      return (
+        <TreeNode icon={<Icon type={item.icon}/>} title={treeTitle} key={item._id} catalog={item}/>
+      )
     });
-
   }
 
   render() {

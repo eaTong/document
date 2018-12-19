@@ -60,9 +60,17 @@ class CatelogModal extends Component {
           <FormItem
             {...formItemLayout}
             label="第三方key"
-            >
+          >
             {getFieldDecorator('thirdPartyKey')(
               <Input/>
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="排序"
+          >
+            {getFieldDecorator('sort')(
+              <Input type={'number'}/>
             )}
           </FormItem>
         </Form>

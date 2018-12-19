@@ -21,13 +21,13 @@ function structure(catalogs) {
       ...catalog._doc,
       children: catalog.children.map(key => {
         return keyMap[key];
-      }).filter(cat => !!cat)
+      }).filter(cat => !!cat).sort((a, b) => a.sort - b.sort)
     };
     if (catalog.level === 0) {
       result.push(keyMap[catalog._id])
     }
   }
-  return result;
+  return result.sort((a, b) => a.sort - b.sort);
 }
 
 async function addCatalog(data) {
@@ -57,6 +57,7 @@ async function updateCatalog(data) {
   catalog.name = data.name;
   catalog.thirdPartyKey = data.thirdPartyKey;
   catalog.remark = data.remark;
+  catalog.sort = data.sort;
   await catalog.save();
   return catalog;
 
@@ -68,9 +69,6 @@ async function authAddCatalog(data) {
   }
   let catalog, parent;
   catalog = new Catalog(data);
-  catalog.module = data.moduleId;
-  catalog.icon = data.icon;
-  catalog.thirdPartyKey = data.thirdPartyKey;
   if (data.parent) {
     parent = await Catalog.findOne({thirdPartyKey: data.parent, module: data.moduleId});
     catalog.level = parent ? parent.level + 1 : 0;
@@ -90,6 +88,7 @@ async function authUpdateCatalog(data) {
   catalog.name = data.name;
   catalog.remark = data.remark;
   catalog.icon = data.icon;
+  catalog.sort = data.sort;
   await catalog.save();
   return catalog;
 }

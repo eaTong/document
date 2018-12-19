@@ -8,6 +8,7 @@ const CatalogSchema = new Schema({
   comment: {type: String},
   icon: {type: String},
   level: {type: Number},
+  sort: {type: Number},
   thirdPartyKey: {type: String},
   children: {type: Array, ref: this},
   module: {type: String, ref: 'module'},
