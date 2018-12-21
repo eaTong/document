@@ -7,12 +7,12 @@ const catalogServer = require('../services/catalogServer');
 
 module.exports =class CatalogApi {
 
-  // @checkArgument('moduleId')
+
   static async getCatalogs(ctx) {
     return await catalogServer.getCatalogs(ctx.request.body.moduleId);
   }
 
-  // @checkArgument(['name', 'moduleId'])
+
   static async addCatalog(ctx) {
     const data = ctx.request.body;
     return await catalogServer.addCatalog(data);
@@ -32,7 +32,7 @@ module.exports =class CatalogApi {
 
   }
 
-  // @checkArgument(['name', 'moduleId', 'thirdPartyKey'])
+
   static async authAddCatalog(ctx) {
     const data = ctx.request.body;
     return await catalogServer.authAddCatalog(data);

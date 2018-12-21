@@ -7,6 +7,7 @@ const CatalogSchema = new Schema({
   name: {type: String, required: true},
   comment: {type: String},
   icon: {type: String},
+  introduction: {type: String},
   level: {type: Number},
   sort: {type: Number},
   thirdPartyKey: {type: String},

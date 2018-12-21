@@ -73,6 +73,14 @@ class CatelogModal extends Component {
               <Input type={'number'}/>
             )}
           </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="排序"
+          >
+            {getFieldDecorator('description')(
+              <Input.TextArea/>
+            )}
+          </FormItem>
         </Form>
       </Modal>
     );

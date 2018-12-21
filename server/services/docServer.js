@@ -24,7 +24,7 @@ async function deleteDoc(id) {
 async function getDocByCatalog(catalogId, shouldAddCount) {
   const doc = await Doc.findOne({catalog: catalogId});
   const catalog = await Catalog.findById(catalogId);
-  if (shouldAddCount) {
+  if (shouldAddCount && doc) {
     doc.viewCount = doc.viewCount ? doc.viewCount + 1 : 1;
     await doc.save();
   }
@@ -83,4 +83,4 @@ async function publishDoc(data, user) {
   return doc;
 }
 
-module.exports ={getDocs, addDoc, deleteDoc, updateDoc, publishDoc, getDocByCatalog, viewDocByThirdParty}
+module.exports = {getDocs, addDoc, deleteDoc, updateDoc, publishDoc, getDocByCatalog, viewDocByThirdParty}

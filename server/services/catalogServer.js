@@ -3,6 +3,7 @@
  */
 const Catalog = require('../schema/CatalogSchema');
 const Doc = require('../schema/DocSchema');
+const {$in} = require('mongoose');
 const {LogicError} = require('../framework/errors');
 
 async function getCatalogs(moduleId) {
@@ -43,6 +44,14 @@ async function addCatalog(data) {
   return catalog;
 }
 
+async function getChildrenOfCatalog(catalogId) {
+  const catalog = await Catalog.findById(catalogId);
+  if (catalog) {
+    const children = await Catalog.find({_id: {$in: catalog.children}});
+    return children.map(child => child._doc);
+  }
+  return []
+}
 
 async function deleteCatalog(id) {
   const catalog = await Catalog.findById(id);
@@ -58,6 +67,7 @@ async function updateCatalog(data) {
   catalog.thirdPartyKey = data.thirdPartyKey;
   catalog.remark = data.remark;
   catalog.sort = data.sort;
+  catalog.introduction = data.introduction;
   await catalog.save();
   return catalog;
 
@@ -89,11 +99,12 @@ async function authUpdateCatalog(data) {
   catalog.remark = data.remark;
   catalog.icon = data.icon;
   catalog.sort = data.sort;
+  catalog.introduction = data.introduction;
   await catalog.save();
   return catalog;
 }
 
-async function authDeleteCatalog(id) {
+async function authDeleteCatalog(thirdPartyKey) {
   const catalog = await Catalog.findOne(thirdPartyKey);
   catalog.enable = false;
   await catalog.save();
@@ -108,5 +119,7 @@ module.exports = {
   updateCatalog,
   authAddCatalog,
   authUpdateCatalog,
-  authDeleteCatalog
+  authDeleteCatalog,
+  getChildrenOfCatalog,
 };
+
