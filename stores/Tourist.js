@@ -9,7 +9,9 @@ import {message} from 'antd';
 export default class Tourist {
   @observable modules = [];
   @observable catalog = [];
-  @observable document = {};
+  @observable contentDetail = {};
+  @observable parentCatalog = {};
+  @observable relativeCatalogs = [];
   @observable showDoc = true;
 
   @action

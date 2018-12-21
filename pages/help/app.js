@@ -9,7 +9,9 @@ import ajax from "../../util/ajaxUtil";
 import router from 'next/router'
 
 const ListItem = List.Item;
-const MODULE_ID = '5c19f0a8eea2235c75a0d28e';
+
+const MODULE_ID = '5c19f0a8eea2235c75a0d28e';// 线上
+// const MODULE_ID = '5c130ee0379ccc1d9ade7572';// 本地
 
 @inject('tourist', 'app') @observer
 class AppHelp extends Component {

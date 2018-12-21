@@ -9,7 +9,9 @@ import ajax from "../../util/ajaxUtil";
 import router from 'next/router'
 
 const ListItem = List.Item;
-const MODULE_ID = '5c19f0a8eea2235c75a0d28e';
+
+const MODULE_ID = '5c19f0a8eea2235c75a0d28e';// 线上
+// const MODULE_ID = '5c130ee0379ccc1d9ade7572';// 本地
 
 @inject('tourist', 'app') @observer
 class Content extends Component {
@@ -34,10 +36,15 @@ class Content extends Component {
         data: {catalogId: parentCatalog, moduleId: MODULE_ID},
         ctx
       });
-      tourist.contentDetail.relativeCatalogs = relativeCatalogs.data.children || [];
+      tourist.relativeCatalogs = relativeCatalogs.data.children || [];
+      tourist.parentCatalog = relativeCatalogs.data.catalog || {};
     }
 
     return {tourist};
+  }
+
+  renderPath(route, params, routes, paths) {
+    console.log(route, params, routes, paths)
   }
 
   render() {
@@ -45,6 +52,21 @@ class Content extends Component {
 
     return (
       <div className='help-page app'>
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <a className={'breadcrumb-link'} href={'/help/app'}>帮助中心</a>
+          </Breadcrumb.Item>
+          {app.query.parentCatalog && (
+            <Breadcrumb.Item>
+              <a className={'breadcrumb-link'} href={`/help/content?catalogId=${app.query.parentCatalog}`}>
+                {tourist.parentCatalog.name}
+              </a>
+            </Breadcrumb.Item>
+          )}
+          <Breadcrumb.Item>
+            {tourist.contentDetail.catalog ? tourist.contentDetail.catalog.name : ''}
+          </Breadcrumb.Item>
+        </Breadcrumb>
         {!!tourist.contentDetail.content && (
           <h2>{tourist.contentDetail.catalog ? tourist.contentDetail.catalog.name : ''}</h2>
         )}
@@ -58,7 +80,7 @@ class Content extends Component {
                 <ListItem
                   key={item._id}
                   bordered={false}
-                  onClick={() => router.push(`/help/content?catalogId=${item._id}&parentCatalog=${app.query.catalogId}`)}
+                  onClick={() => window.location = (`/help/content?catalogId=${item._id}&parentCatalog=${app.query.catalogId}`)}
                 >
                   <div className="link-item">
                     <a>{item.name}</a>
@@ -69,11 +91,11 @@ class Content extends Component {
             </List>
           </div>
         )}
-        {(tourist.contentDetail.relativeCatalogs || []).length > 0 && (
+        {(tourist.relativeCatalogs || []).length > 0 && (
           <div className="brother-document">
-            <h2>相关文档</h2>
+            <h2>相关主题</h2>
             <List split={false}>
-              {tourist.contentDetail.relativeCatalogs.map(item => (
+              {tourist.relativeCatalogs.map(item => (
                 <ListItem
                   key={item._id}
                   bordered={false}
@@ -99,6 +121,9 @@ class Content extends Component {
           display:in-block;
           max-width:100%;
           height:auto;
+        }
+        .breadcrumb-link{
+          color:#1890ff;
         }
         .relative-document{
 
