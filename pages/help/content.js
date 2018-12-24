@@ -9,9 +9,7 @@ import ajax from "../../util/ajaxUtil";
 import router from 'next/router'
 
 const ListItem = List.Item;
-
-const MODULE_ID = '5c19f0a8eea2235c75a0d28e';// 线上
-// const MODULE_ID = '5c130ee0379ccc1d9ade7572';// 本地
+const MODULE_ID = process.env.NODE_ENV === 'production' ? '5c19f0a8eea2235c75a0d28e' : '5c130ee0379ccc1d9ade7572';// 线上
 
 @inject('tourist', 'app') @observer
 class Content extends Component {
@@ -41,10 +39,6 @@ class Content extends Component {
     }
 
     return {tourist};
-  }
-
-  renderPath(route, params, routes, paths) {
-    console.log(route, params, routes, paths)
   }
 
   render() {
@@ -115,7 +109,8 @@ class Content extends Component {
         <style jsx>{`
         .help-page{
           padding:10px;
-
+          width: 100%;
+          overflow: hidden;
         }
         .help-page .content img{
           display:in-block;

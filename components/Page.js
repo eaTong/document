@@ -51,7 +51,6 @@ export default Component => class Page extends React.Component {
     return (
       <Provider {...this.stores} >
         <div className="layout-default">
-          <Loading/>
           <Head>
             <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport"/>
           </Head>
