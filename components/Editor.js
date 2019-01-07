@@ -22,7 +22,7 @@ class Editor extends Component {
           toolbars: [
             [
               'source', //源代码
-              // 'anchor', //锚点
+              'anchor', //锚点
               'undo', //撤销
               'redo', //重做
               'bold', //加粗

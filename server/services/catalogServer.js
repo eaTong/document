@@ -47,7 +47,7 @@ async function addCatalog(data) {
 async function getChildrenOfCatalog(catalogId) {
   const catalog = await Catalog.findById(catalogId);
   if (catalog) {
-    const children = await Catalog.find({_id: {$in: catalog.children}});
+    const children = await Catalog.find({enable: true, _id: {$in: catalog.children}});
     return children.map(child => child._doc);
   }
   return []
