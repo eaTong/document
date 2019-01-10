@@ -13,6 +13,11 @@ module.exports =class CatalogApi {
   }
 
 
+  static async search(ctx) {
+    return await catalogServer.search(ctx.request.body);
+  }
+
+
   static async addCatalog(ctx) {
     const data = ctx.request.body;
     return await catalogServer.addCatalog(data);

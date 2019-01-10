@@ -3,8 +3,8 @@
  */
 const Catalog = require('../schema/CatalogSchema');
 const Doc = require('../schema/DocSchema');
-const {$in} = require('mongoose');
 const {LogicError} = require('../framework/errors');
+const nodejieba = require("nodejieba");
 
 async function getCatalogs(moduleId) {
   const catalogs = await Catalog.find({
@@ -12,6 +12,17 @@ async function getCatalogs(moduleId) {
     module: moduleId
   }).sort({level: -1});
   return structure(catalogs);
+}
+
+async function search({moduleId = '5c130ee0379ccc1d9ade7572', keywords}) {
+  const TOTAL_LENGTH = 20;
+  const extractedKeywords = nodejieba.cut(keywords.slice(30));
+  const reg = new RegExp(extractedKeywords.join('|'));
+  const result = await Doc.find({content: reg}).populate('catalog').limit(20);
+
+
+
+  // return result.map(item => ({...item._doc, content: item.content.replace(/<[^>]*>/g, '').slice(0, 200)}));
 }
 
 function structure(catalogs) {
@@ -114,6 +125,7 @@ async function authDeleteCatalog(thirdPartyKey) {
 
 module.exports = {
   getCatalogs,
+  search,
   addCatalog,
   deleteCatalog,
   updateCatalog,

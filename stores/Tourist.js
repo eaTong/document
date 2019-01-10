@@ -5,6 +5,7 @@ import {observable, action, computed, toJS} from 'mobx';
 import ajax from '../util/ajaxUtil';
 import stores from './index';
 import {message} from 'antd';
+import router from 'next/router';
 
 export default class Tourist {
   @observable modules = [];
@@ -28,5 +29,10 @@ export default class Tourist {
 
   @action clearContent() {
     this.document = {};
+  }
+
+  @action
+  async search({keywords, moduleId}) {
+    router.push(`/search?keywords=${keywords}&moduleId=${moduleId}`);
   }
 }

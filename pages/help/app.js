@@ -2,11 +2,12 @@
  * Created by eatong on 17-12-5.
  */
 import React, {Component} from 'react';
-import {Page, Title} from '~components';
+import {Page, Title, SearchBar} from '~components';
 import {inject, observer} from 'mobx-react'
 import {Breadcrumb, List, Button, Tree} from 'antd';
 import ajax from "../../util/ajaxUtil";
-import router from 'next/router'
+import router from 'next/router';
+
 
 const ListItem = List.Item;
 
@@ -31,6 +32,10 @@ class AppHelp extends Component {
     const {tourist, app} = this.props;
     return (
       <div className='help-page app'>
+        <Title title={'云智装帮助文档'}/>
+
+        <SearchBar placeholder={'输入主题进行搜索'} onSearch={(val) => tourist.search({keywords: val, moduleId: MODULE_ID})}/>
+
         <List>
           {tourist.helpCatalogs.map(item => (
             <ListItem
@@ -40,7 +45,7 @@ class AppHelp extends Component {
             >
               <div className="link-item">
                 <a>{item.name}</a>
-                {item.description && <div className="d-remark">{item.description}</div>}
+                {item.description && <div className="remark">{item.description}</div>}
               </div>
             </ListItem>
           ))}

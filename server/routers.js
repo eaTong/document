@@ -47,6 +47,7 @@ router.post('/api/doc/delete', docApi.deleteDoc);
 
 router.get('/api/pub/module/get', moduleApi.getModules);
 router.get('/api/pub/catalog/get', catalogApi.getCatalogs);
+router.get('/api/pub/catalog/search', catalogApi.search);
 router.get('/api/pub/catalog/detail-with-children', docApi.detailWithChildren);
 router.get('/api/pub/doc/detail/catalog', docApi.viewDocByCatalog);
 router.get('/api/pub/doc/detail/catalog/third-party', docApi.viewDocByThirdParty);
