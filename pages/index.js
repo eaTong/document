@@ -7,46 +7,12 @@ import {Link} from '../page-routes'
 @inject('tourist') @observer
 class Index extends React.Component {
 
-  static async init(ctx) {
-    const {data} = await ajax({url: '/api/pub/module/get', method: 'get', ctx});
-    return {tourist: {modules: data}};
-  }
-
-  componentDidMount() {
-    this.props.tourist.clearContent();
-  }
-
-
   render() {
     const {tourist} = this.props;
     return (
       <div className="module-list">
         <Title>首页</Title>
-        {tourist.modules.map(item => (
-          <div className="module-item" key={item._id || 1}>
-            <div className="title"><Link route='module' params={{id: item._id}}><a>{item.name}</a></Link></div>
-            <div className="remark">{item.remark}</div>
-          </div>
-        ))}
-        <style jsx>{`
-          .module-list{
-            padding:16px;
-          }
-          .module-list .module-item{
-             padding-top: 16px;
-             padding-bottom: 16px;
-             border-bottom:1px solid #e5e5e5;
-
-          }
-          .module-list .module-item .title{
-            color:#666;
-            font-size:16px;
-          }
-          .module-list .module-item .remark{
-            color:#aaa;
-            font-size:12px;
-          }
-        `}</style>
+        nothing to show...
       </div>
     )
   }

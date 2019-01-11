@@ -18,8 +18,7 @@ const LAST_EXPANDED_KEYS = 'lastExpandedKeys';
 class Catalog extends Component {
 
   static async init(ctx) {
-
-    const {data} = await ajax({url: '/api/catalog/get', data: {moduleId: ctx.query.moduleId}, ctx});
+    const {data} = await ajax({url: '/api/document/get', data: {moduleId: ctx.query.moduleId}, ctx});
     return {catalog: {itemList: data, query: ctx.query}};
   }
 
@@ -35,7 +34,7 @@ class Catalog extends Component {
           <span className="label">
             {item.name}
 
-            {item.hasDoc && (<Icon type={'check'} className={'success-text'}/>)}
+            {item.published && (<Icon type={'check'} className={'success-text'}/>)}
           </span>
           <span className="extensional">
             <span className="sort">{item.sort}</span>

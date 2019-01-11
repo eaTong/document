@@ -34,7 +34,7 @@ export default class Catelog {
   async onSaveCatalog(form, moduleId) {
     if (this.operateType === 'add') {
       const {success, data} = await ajax({
-        url: '/api/catalog/add',
+        url: '/api/document/add',
         data: {...form, moduleId, parent: this.currentCatalog._id, level: this.currentCatalog.level + 1}
       });
       if (success) {
@@ -42,7 +42,7 @@ export default class Catelog {
         this.toggleCatalogModal()
       }
     } else {
-      const {success} = await ajax({url: '/api/catalog/update', data: {...form, id: this.currentCatalog._id}});
+      const {success} = await ajax({url: '/api/document/update', data: {...form, id: this.currentCatalog._id}});
       if (success) {
         await this.getCatalogs();
         this.toggleCatalogModal()
@@ -52,7 +52,7 @@ export default class Catelog {
 
   @action
   async getCatalogs() {
-    const {success, data} = await ajax({url: '/api/catalog/get', data: {moduleId: stores.app.query.moduleId}});
+    const {success, data} = await ajax({url: '/api/document/get', data: {moduleId: stores.app.query.moduleId}});
     if (success) this.itemList = data;
   }
 
@@ -65,7 +65,7 @@ export default class Catelog {
 
   @action
   async deleteCatalog(val) {
-    const {success} = await ajax({url: '/api/catalog/delete', data: {id: val}});
+    const {success} = await ajax({url: '/api/document/delete', data: {id: val}});
     if (success) {
       this.currentCatalog = {};
       message.success('删除用户成功！');

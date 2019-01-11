@@ -4,6 +4,7 @@ const TodoApi = require('./apis/todoApi');
 const UserApi = require('./apis/userApi');
 const moduleApi = require('./apis/moduleApi');
 const catalogApi = require('./apis/catalogApi');
+const documentApi = require('./apis/documentApi');
 const docApi = require('./apis/docApi');
 
 const authCheck = require('./framework/authCheck');
@@ -32,6 +33,11 @@ router.post('/api/module/get', moduleApi.getModules);
 router.post('/api/module/add', moduleApi.addModule);
 router.post('/api/module/update', moduleApi.updateModule);
 router.post('/api/module/delete', moduleApi.deleteModule);
+
+router.post('/api/document/get', documentApi.getDocuments);
+router.post('/api/document/add', documentApi.addDocument);
+router.post('/api/document/update', documentApi.updateDocument);
+router.post('/api/document/delete', documentApi.deleteDocument);
 
 router.post('/api/catalog/get', catalogApi.getCatalogs);
 router.post('/api/catalog/add', catalogApi.addCatalog);
