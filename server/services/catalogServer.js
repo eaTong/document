@@ -23,7 +23,7 @@ async function search({moduleId = '5c130ee0379ccc1d9ade7572', keywords}) {
 
   let searchedCount = 0;
   let result = [];
-  const titleFullMath = await Catalog.find({name: fullReg,published:true}).populate('doc').limit(TOTAL_LENGTH);
+  const titleFullMath = await Catalog.find({name: fullReg, published: true}).populate('doc').limit(TOTAL_LENGTH);
   searchedCount += titleFullMath.length;
   result = result.concat(titleFullMath.map(item => ({
     catalogId: item._doc._id,
@@ -34,7 +34,10 @@ async function search({moduleId = '5c130ee0379ccc1d9ade7572', keywords}) {
     return result;
   }
 
-  const titleKeywordsMath = await Catalog.find({name: keywordsReg,published:true}).populate('doc').limit(TOTAL_LENGTH - searchedCount);
+  const titleKeywordsMath = await Catalog.find({
+    name: keywordsReg,
+    published: true
+  }).populate('doc').limit(TOTAL_LENGTH - searchedCount);
   searchedCount += titleKeywordsMath.length;
   result = result.concat(titleKeywordsMath.map(item => ({
     catalogId: item._doc._id,
@@ -64,6 +67,10 @@ async function search({moduleId = '5c130ee0379ccc1d9ade7572', keywords}) {
     content: item.content.replace(/<[^>]*>/g, '').slice(0, 200)
   })));
   return result;
+}
+
+function getId(data) {
+  return data.filter(item => item._doc._id)
 }
 
 function structure(catalogs) {
@@ -99,7 +106,7 @@ async function addCatalog(data) {
 async function getChildrenOfCatalog(catalogId) {
   const catalog = await Catalog.findById(catalogId);
   if (catalog) {
-    const children = await Catalog.find({ enable: {$ne: false}, _id: {$in: catalog.children}});
+    const children = await Catalog.find({enable: {$ne: false}, _id: {$in: catalog.children}});
     return children.map(child => child._doc);
   }
   return []

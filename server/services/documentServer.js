@@ -53,7 +53,8 @@ async function search({moduleId, keywords}) {
   const titleKeywordsMath = await Document.find({
     module: moduleId,
     name: keywordsReg,
-    published: true
+    published: true,
+    _id:{$notin:getId(result)}
   }).limit(TOTAL_LENGTH - searchedCount);
   result = result.concat(titleKeywordsMath);
   searchedCount = result.length;
@@ -64,12 +65,17 @@ async function search({moduleId, keywords}) {
   const contentFullMath = await Document.find({
     module: moduleId,
     content: fullReg,
-    published: true
+    published: true,
+    _id:{$notin:getId(result)}
   });
   result = result.concat(titleKeywordsMath);
 
   return result;
 
+}
+
+function getId(data) {
+  return data.filter(item => item._doc._id)
 }
 
 
