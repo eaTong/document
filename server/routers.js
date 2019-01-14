@@ -35,6 +35,7 @@ router.post('/api/module/update', moduleApi.updateModule);
 router.post('/api/module/delete', moduleApi.deleteModule);
 
 router.post('/api/document/get', documentApi.getDocuments);
+router.post('/api/document/detail', documentApi.getDocumentDetail);
 router.post('/api/document/add', documentApi.addDocument);
 router.post('/api/document/update', documentApi.updateDocument);
 router.post('/api/document/delete', documentApi.deleteDocument);
@@ -71,4 +72,4 @@ router.get('/api/*', async ctx => {
   ctx.body = 'api not found';
 });
 
-module.exports =router;
+module.exports = router;

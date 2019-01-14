@@ -1,7 +1,6 @@
 /**
  * Created by eatong on 17-11-29.
  */
-const {checkArgument} = require('../framework/apiDecorator');
 const {LogicError} = require('../framework/errors');
 const documentServer = require('../services/documentServer');
 
@@ -10,6 +9,10 @@ module.exports =class DocumentApi {
 
   static async getDocuments(ctx) {
     return await documentServer.getDocuments(ctx.request.body.moduleId);
+  }
+
+  static async getDocumentDetail(ctx) {
+    return await documentServer.getDocumentDetail(ctx.request.body);
   }
 
 

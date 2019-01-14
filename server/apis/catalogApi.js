@@ -1,7 +1,6 @@
 /**
  * Created by eatong on 17-11-29.
  */
-const {checkArgument} = require('../framework/apiDecorator');
 const {LogicError} = require('../framework/errors');
 const catalogServer = require('../services/catalogServer');
 

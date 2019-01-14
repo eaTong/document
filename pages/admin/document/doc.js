@@ -14,8 +14,8 @@ const BreadcrumbItem = Breadcrumb.Item;
 class Doc extends Component {
 
   static async init(ctx) {
-    const {success, data} = await ajax({url: '/api/doc/detail/catalog', data: {catalogId: ctx.query.catalogId}, ctx});
-    return {doc: {content: data.content, catalog: data.catalog}};
+    const {success, data} = await ajax({url: '/api/document/detail', data: {catalogId: ctx.query.catalogId}, ctx});
+    return {doc: {content: data.content, document: data}};
   }
 
   render() {
@@ -29,10 +29,10 @@ class Doc extends Component {
               <Link href='/admin/document/module'><a>模块管理</a></Link>
             </BreadcrumbItem>
             <BreadcrumbItem>
-              <Link href={`/admin/document/catalog?moduleId=${doc.catalog.module}`}><a>目录管理</a></Link>
+              <Link href={`/admin/document/catalog?moduleId=${doc.document.module}`}><a>目录管理</a></Link>
             </BreadcrumbItem>
             <BreadcrumbItem>
-              {doc.catalog.name}
+              {doc.document.name}
             </BreadcrumbItem>
           </Breadcrumb>
         )}>

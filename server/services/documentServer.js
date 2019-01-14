@@ -13,6 +13,15 @@ async function getDocuments(moduleId) {
   return structure(documents.map(item => item._doc));
 }
 
+async function getDocumentDetail({catalogId, shouldAddCount}) {
+  const doc = await Document.findById(catalogId);
+  if (shouldAddCount && doc) {
+    doc.viewCount = doc.viewCount ? doc.viewCount + 1 : 1;
+    await doc.save();
+  }
+  return doc;
+}
+
 
 async function search({moduleId, keywords}) {
 
@@ -72,11 +81,10 @@ async function deleteDocument(id) {
 
 async function updateDocument(data) {
   const document = await Document.findById(data.id);
-  document.name = data.name;
-  document.thirdPartyKey = data.thirdPartyKey;
-  document.remark = data.remark;
-  document.sort = data.sort;
-  document.introduction = data.introduction;
+  for(let key in data){
+    document[key] = data[key];
+  }
+
   await document.save();
   return document;
 
@@ -123,6 +131,7 @@ async function authDeleteDocument(thirdPartyKey) {
 
 module.exports = {
   getDocuments,
+  getDocumentDetail,
   search,
   addDocument,
   deleteDocument,

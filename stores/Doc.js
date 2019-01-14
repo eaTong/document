@@ -8,28 +8,18 @@ import {message} from 'antd';
 
 export default class Doc {
   @observable content = '';
-  @observable catalog = {};
+  @observable document = {};
 
   @action
   onChangeContent(content) {
     this.content = content;
   }
 
-
-  @action
-  async saveDoc(content) {
-    const {success, data} = await ajax({
-      url: '/api/doc/update',
-      data: {content, catalog: stores.app.query.catalogId}
-    });
-    if (success) message.success('编辑文档成功');
-  }
-
   @action
   async publishDoc(content) {
     const {success, data} = await ajax({
-      url: '/api/doc/publish',
-      data: {content, catalog: stores.app.query.catalogId}
+      url: '/api/document/update',
+      data: {...this.document, content, id: this.document._id}
     });
     if (success) message.success('发布文档成功');
   }
