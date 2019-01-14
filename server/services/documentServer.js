@@ -54,7 +54,7 @@ async function search({moduleId, keywords}) {
     module: moduleId,
     name: keywordsReg,
     published: true,
-    _id:{$notin:getId(result)}
+    _id:{$nin:getId(result)}
   }).limit(TOTAL_LENGTH - searchedCount);
   result = result.concat(titleKeywordsMath);
   searchedCount = result.length;
@@ -66,7 +66,7 @@ async function search({moduleId, keywords}) {
     module: moduleId,
     content: fullReg,
     published: true,
-    _id:{$notin:getId(result)}
+    _id:{$nin:getId(result)}
   });
   result = result.concat(titleKeywordsMath);
 
