@@ -9,34 +9,22 @@ import ajax from "../../util/ajaxUtil";
 import router from 'next/router'
 
 const ListItem = List.Item;
-const MODULE_ID = process.env.NODE_ENV === 'production' ? '5c19f0a8eea2235c75a0d28e' : '5c130ee0379ccc1d9ade7572';// 线上
+const MODULE_ID = process.env.NODE_ENV === 'production' ? '5c19f0a8eea2235c75a0d28e' : '5c19f0a8eea2235c75a0d28e';// 线上
 
 @inject('tourist', 'app') @observer
 class Content extends Component {
 
   static async init(ctx) {
-    const {catalogId, parentCatalog} = ctx.query;
+    const {catalogId} = ctx.query;
     const tourist = {};
 
     const {data} = await ajax({
-      url: '/api/pub/catalog/detail-with-children',
+      url: '/api/pub/document/detail-with-children',
       method: 'get',
       data: {catalogId, moduleId: MODULE_ID},
       ctx
     });
     tourist.contentDetail = data || {};
-    let relativeCatalogs = {};
-    if (parentCatalog) {
-
-      relativeCatalogs = await ajax({
-        url: '/api/pub/catalog/detail-with-children',
-        method: 'get',
-        data: {catalogId: parentCatalog, moduleId: MODULE_ID},
-        ctx
-      });
-      tourist.relativeCatalogs = relativeCatalogs.data.children || [];
-      tourist.parentCatalog = relativeCatalogs.data.catalog || {};
-    }
 
     return {tourist};
   }
@@ -58,17 +46,15 @@ class Content extends Component {
             </Breadcrumb.Item>
           )}
           <Breadcrumb.Item>
-            {tourist.contentDetail.catalog ? tourist.contentDetail.catalog.name : ''}
+            {tourist.contentDetail.document ? tourist.contentDetail.document.name : ''}
           </Breadcrumb.Item>
         </Breadcrumb>
-        {!!tourist.contentDetail.content && (
-          <h2>{tourist.contentDetail.catalog ? tourist.contentDetail.catalog.name : ''}</h2>
-        )}
-        <div className="content" dangerouslySetInnerHTML={{__html: tourist.contentDetail.content}}/>
+
+        <div className="content" dangerouslySetInnerHTML={{__html: tourist.contentDetail.document.content}}/>
 
         {(tourist.contentDetail.children || []).length > 0 && (
           <div className="children-document">
-            <h2>{`更多'${tourist.contentDetail.catalog ? tourist.contentDetail.catalog.name : ''}'相关`}</h2>
+            <h2>{`更多'${tourist.contentDetail.document ? tourist.contentDetail.document.name : ''}'相关`}</h2>
             <List split={false}>
               {tourist.contentDetail.children.map(item => (
                 <ListItem
@@ -85,15 +71,15 @@ class Content extends Component {
             </List>
           </div>
         )}
-        {(tourist.relativeCatalogs || []).length > 0 && (
+        {(tourist.contentDetail.brothers || []).length > 0 && (
           <div className="brother-document">
             <h2>相关主题</h2>
             <List split={false}>
-              {tourist.relativeCatalogs.map(item => (
+              {tourist.contentDetail.brothers.map(item => (
                 <ListItem
                   key={item._id}
                   bordered={false}
-                  onClick={() => router.push(`/help/content?catalogId=${item._id}&parentCatalog=${app.query.parentCatalog}`)}
+                  onClick={() => router.push(`/help/content?catalogId=${item._id}`)}
                 >
                   <div className="link-item">
                     <a>{item.name}</a>

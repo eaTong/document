@@ -14,18 +14,64 @@ async function getDocuments(moduleId) {
 }
 
 async function getDocumentDetail({catalogId, shouldAddCount}) {
-  const doc = await Document.findById(catalogId);
-  if (shouldAddCount && doc) {
-    doc.viewCount = doc.viewCount ? doc.viewCount + 1 : 1;
-    await doc.save();
-  }
-  return doc;
+  return await Document.findById(catalogId);
+}
+
+
+async function detailWithChildren({moduleId, catalogId}) {
+  const document = await Document.findById(catalogId);
+  const children = await Document.find({
+    parent: catalogId,
+    published: true
+  }, 'name icon introduction level sort thirdPartyKey parent module published viewCount');
+  const brothers = await Document.find({
+    parent: document.parent,
+    module: moduleId,
+    _id: {$ne: catalogId},
+    published: true
+  });
+
+  return {document, children, brothers,};
 }
 
 
 async function search({moduleId, keywords}) {
+  const TOTAL_LENGTH = 20;
+  const extractedKeywords = nodejieba.cut(keywords.slice(0, 30));
+  const fullReg = new RegExp(keywords);
+  const keywordsReg = new RegExp(extractedKeywords.length > 0 ? extractedKeywords.join('|') : keywords);
+
+  let searchedCount = 0;
+  let result = [];
+  const titleFullMath = await Document.find({module: moduleId, name: fullReg, published: true}).limit(TOTAL_LENGTH);
+  result = result.concat(titleFullMath);
+  searchedCount = result.length;
+  if (searchedCount.length >= 20) {
+    return result;
+  }
+
+  const titleKeywordsMath = await Document.find({
+    module: moduleId,
+    name: keywordsReg,
+    published: true
+  }).limit(TOTAL_LENGTH - searchedCount);
+  result = result.concat(titleKeywordsMath);
+  searchedCount = result.length;
+  if (searchedCount.length >= 20) {
+    return result;
+  }
+
+  const contentFullMath = await Document.find({
+    module: moduleId,
+    content: fullReg,
+    published: true
+  });
+  result = result.concat(titleKeywordsMath);
+
+  return result;
 
 }
+
 
 function structure(documents) {
   const keyMap = {};
@@ -42,7 +88,6 @@ function structure(documents) {
   }
 
   function getChildren(parentId) {
-    console.log(parentKeyMapping[parentId], parentId)
     return (parentKeyMapping[parentId] || []).map(item => ({...item, children: getChildren(item._id)}))
   }
 
@@ -62,15 +107,6 @@ async function addDocument(data) {
   return document;
 }
 
-async function getChildrenOfDocument(documentId) {
-  const document = await Document.findById(documentId);
-  if (document) {
-    const children = await Document.find({enable: true, _id: {$in: document.children}});
-    return children.map(child => child._doc);
-  }
-  return []
-}
-
 async function deleteDocument(id) {
   const document = await Document.findById(id);
   document.enable = false;
@@ -81,7 +117,7 @@ async function deleteDocument(id) {
 
 async function updateDocument(data) {
   const document = await Document.findById(data.id);
-  for(let key in data){
+  for (let key in data) {
     document[key] = data[key];
   }
 
@@ -133,6 +169,7 @@ module.exports = {
   getDocuments,
   getDocumentDetail,
   search,
+  detailWithChildren,
   addDocument,
   deleteDocument,
   updateDocument,

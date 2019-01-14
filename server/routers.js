@@ -53,11 +53,10 @@ router.post('/api/doc/publish', docApi.publishDoc);
 router.post('/api/doc/delete', docApi.deleteDoc);
 
 router.get('/api/pub/module/get', moduleApi.getModules);
-router.get('/api/pub/catalog/get', catalogApi.getCatalogs);
-router.get('/api/pub/catalog/search', catalogApi.search);
-router.get('/api/pub/catalog/detail-with-children', docApi.detailWithChildren);
-router.get('/api/pub/doc/detail/catalog', docApi.viewDocByCatalog);
-router.get('/api/pub/doc/detail/catalog/third-party', docApi.viewDocByThirdParty);
+router.get('/api/pub/document/get', documentApi.getDocuments);
+router.get('/api/pub/document/search', documentApi.search);
+router.get('/api/pub/document/detail-with-children', documentApi.detailWithChildren);
+router.get('/api/pub/document/detail/third-party', docApi.viewDocByThirdParty);
 
 router.post('/api/auth/catalog/add', catalogApi.authAddCatalog);
 router.post('/api/auth/catalog/update', catalogApi.authUpdateCatalog);

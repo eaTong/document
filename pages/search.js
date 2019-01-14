@@ -10,7 +10,7 @@ import router from "next/router";
 import SearchBar from "../components/SearchBar";
 
 const ListItem = List.Item;
-const MODULE_ID = process.env.NODE_ENV === 'production' ? '5c19f0a8eea2235c75a0d28e' : '5c130ee0379ccc1d9ade7572';// 线上
+const MODULE_ID = process.env.NODE_ENV === 'production' ? '5c19f0a8eea2235c75a0d28e' : '5c19f0a8eea2235c75a0d28e';// 线上
 
 @inject('app', 'tourist') @observer
 class Search extends Component {
@@ -18,7 +18,7 @@ class Search extends Component {
   static async init(ctx) {
     const {moduleId, keywords} = ctx.query;
     const {data, success} = await ajax({
-      url: '/api/pub/catalog/search',
+      url: '/api/pub/document/search',
       method: 'get',
       data: {moduleId, keywords},
       ctx
@@ -48,7 +48,7 @@ class Search extends Component {
                   onClick={() => router.push(`/help/content?catalogId=${item._id}`)}
                 >
                   <div className="link-item">
-                    <a>{item.catalog.name}</a>
+                    <a>{item.name}</a>
                     <div className="d-remark">{item.content}</div>
                   </div>
                 </ListItem>

@@ -4,7 +4,7 @@
 const {LogicError} = require('../framework/errors');
 const documentServer = require('../services/documentServer');
 
-module.exports =class DocumentApi {
+module.exports = class DocumentApi {
 
 
   static async getDocuments(ctx) {
@@ -17,7 +17,13 @@ module.exports =class DocumentApi {
 
 
   static async search(ctx) {
-    return await documentServer.search(ctx.request.body);
+    const result = await documentServer.search(ctx.request.body);
+    return result.map(item => ({...item._doc, content: item.content.replace(/<[^>]*>/g, '').slice(0, 100)}));
+  }
+
+
+  static async detailWithChildren(ctx) {
+    return await documentServer.detailWithChildren(ctx.request.body);
   }
 
 
