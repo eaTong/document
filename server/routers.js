@@ -56,7 +56,7 @@ router.get('/api/pub/module/get', moduleApi.getModules);
 router.get('/api/pub/document/get', documentApi.getDocuments);
 router.get('/api/pub/document/search', documentApi.search);
 router.get('/api/pub/document/detail-with-children', documentApi.detailWithChildren);
-router.get('/api/pub/document/detail/third-party', docApi.viewDocByThirdParty);
+router.get('/api/pub/doc/detail/third-party', documentApi.viewDocByThirdParty);
 
 router.post('/api/auth/catalog/add', catalogApi.authAddCatalog);
 router.post('/api/auth/catalog/update', catalogApi.authUpdateCatalog);

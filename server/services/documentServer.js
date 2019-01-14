@@ -54,7 +54,7 @@ async function search({moduleId, keywords}) {
     module: moduleId,
     name: keywordsReg,
     published: true,
-    _id:{$nin:getId(result)}
+    _id: {$nin: getId(result)}
   }).limit(TOTAL_LENGTH - searchedCount);
   result = result.concat(titleKeywordsMath);
   searchedCount = result.length;
@@ -66,7 +66,7 @@ async function search({moduleId, keywords}) {
     module: moduleId,
     content: fullReg,
     published: true,
-    _id:{$nin:getId(result)}
+    _id: {$nin: getId(result)}
   });
   result = result.concat(titleKeywordsMath);
 
@@ -132,6 +132,12 @@ async function updateDocument(data) {
 
 }
 
+async function viewDocByThirdParty({thirdPartyKey, moduleId}, shouldAddCount) {
+  const doc = await Document.findOne({thirdPartyKey, module: moduleId, published: true});
+
+  return {content: doc ? doc.content : ''};
+}
+
 async function authAddDocument(data) {
   if (await Document.findOne({thirdPartyKey: data.thirdPartyKey, module: data.moduleId})) {
     throw new LogicError(`thirdPartyKey should be unique,info:{key:${data.thirdPartyKey},parent:{${data.parent}}`);
@@ -176,6 +182,7 @@ module.exports = {
   getDocumentDetail,
   search,
   detailWithChildren,
+  viewDocByThirdParty,
   addDocument,
   deleteDocument,
   updateDocument,

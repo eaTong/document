@@ -26,6 +26,10 @@ module.exports = class DocumentApi {
     return await documentServer.detailWithChildren(ctx.request.body);
   }
 
+  static async viewDocByThirdParty(ctx) {
+    return await documentServer.viewDocByThirdParty(ctx.request.body);
+  }
+
 
   static async addDocument(ctx) {
     const data = ctx.request.body;
