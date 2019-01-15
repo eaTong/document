@@ -44,7 +44,6 @@ class Search extends Component {
               return (
                 <ListItem
                   key={item._id}
-                  bordered={false}
                   onClick={() => router.push(`/help/content?catalogId=${item._id}`)}
                 >
                   <div className="link-item">

@@ -69,7 +69,6 @@ class Content extends Component {
               {tourist.contentDetail.children.map(item => (
                 <ListItem
                   key={item._id}
-                  bordered={false}
                   onClick={() => window.location = (`/help/content?catalogId=${item._id}&parentCatalog=${app.query.catalogId}`)}
                 >
                   <div className="link-item">
@@ -88,7 +87,6 @@ class Content extends Component {
               {tourist.contentDetail.brothers.map(item => (
                 <ListItem
                   key={item._id}
-                  bordered={false}
                   onClick={() => router.push(`/help/content?catalogId=${item._id}`)}
                 >
                   <div className="link-item">

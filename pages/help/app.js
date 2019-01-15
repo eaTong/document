@@ -39,7 +39,6 @@ class AppHelp extends Component {
           {tourist.helpCatalogs.map(item => (
             <ListItem
               key={item._id}
-              bordered={false}
               onClick={() => router.push(`/help/content?catalogId=${item._id}`)}
             >
               <div className="link-item">
