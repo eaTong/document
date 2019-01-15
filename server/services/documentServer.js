@@ -30,8 +30,12 @@ async function detailWithChildren({moduleId, catalogId}) {
     _id: {$ne: catalogId},
     published: true
   });
+  let parent;
+  if (document.parent) {
+    parent = await Document.findById(document.parent, 'name icon')
+  }
 
-  return {document, children, brothers,};
+  return {document, children, brothers, parent};
 }
 
 
@@ -68,7 +72,7 @@ async function search({moduleId, keywords}) {
     published: true,
     _id: {$nin: getId(result)}
   });
-  result = result.concat(titleKeywordsMath);
+  result = result.concat(contentFullMath);
 
   return result;
 

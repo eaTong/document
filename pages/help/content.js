@@ -34,14 +34,16 @@ class Content extends Component {
 
     return (
       <div className='help-page app'>
+        <Title title={tourist.contentDetail.document ? tourist.contentDetail.document.name : ''}/>
         <Breadcrumb>
           <Breadcrumb.Item>
             <a className={'breadcrumb-link'} href={'/help/app'}>帮助中心</a>
           </Breadcrumb.Item>
-          {app.query.parentCatalog && (
+          {tourist.contentDetail.parent && (
             <Breadcrumb.Item>
-              <a className={'breadcrumb-link'} href={`/help/content?catalogId=${app.query.parentCatalog}`}>
-                {tourist.parentCatalog.name}
+              <a className={'breadcrumb-link'}
+                 href={`/help/content?catalogId=${tourist.contentDetail.document.parent}`}>
+                {tourist.contentDetail.parent.name}
               </a>
             </Breadcrumb.Item>
           )}
