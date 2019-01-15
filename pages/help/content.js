@@ -29,6 +29,11 @@ class Content extends Component {
     return {tourist};
   }
 
+  componentDidMount() {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+
   render() {
     const {tourist, app} = this.props;
 
