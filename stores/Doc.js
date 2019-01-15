@@ -19,7 +19,7 @@ export default class Doc {
   async publishDoc(content) {
     const {success, data} = await ajax({
       url: '/api/document/update',
-      data: {...this.document, content, id: this.document._id}
+      data: {...this.document, content, id: this.document._id, published: true}
     });
     if (success) message.success('发布文档成功');
   }
