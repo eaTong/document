@@ -26,12 +26,15 @@ class Content extends Component {
     });
     tourist.contentDetail = data || {};
 
+    if(!ctx.req){
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+
     return {tourist};
   }
 
   componentDidMount() {
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
   }
 
   render() {
