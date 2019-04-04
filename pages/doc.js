@@ -33,28 +33,16 @@ class Doc extends Component {
         <div className="content " dangerouslySetInnerHTML={{__html: tourist.catalog.content}}/>
         <style jsx>{`
           .document-page{
-            display:flex;
-            padding:15px;
+            padding:10px;
+            width: 100%;
+            overflow: hidden;
 
           }
-          .document-page .catalog{
-            min-width:200px;
-            width:200px;
-
-          }
-          .document-page .back-to-catalog{
-            display:none;
-            position:fixed;
-            right:10px;
-            top:10px;
-          }
-          @media screen and (max-width:600px){
-             .document-page{display:block;padding:0;}
-             .document-page .catalog{width:100%;}
-             .document-page .content{width:100%;overflow-x:hidden;}
-            .document-page.show-catalog .content{display:none;}
-            .document-page.show-doc .catalog{display:none;}
-          }
+        .content img{
+          display:in-block;
+          max-width:100%;
+          height:auto;
+        }
         `}</style>
       </div>
 
