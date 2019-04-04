@@ -13,7 +13,7 @@ async function getDocuments(moduleId) {
   return structure(documents.map(item => item._doc));
 }
 
-async function getDocumentDetail({catalogId, shouldAddCount}) {
+async function getDocumentDetail({catalogId}) {
   return await Document.findById(catalogId);
 }
 

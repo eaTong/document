@@ -37,6 +37,7 @@ class Catalog extends Component {
             {item.published && (<Icon type={'check'} className={'success-text'}/>)}
           </span>
           <span className="extensional">
+           {item.published && (<Link href={`/doc?id=${item._id}`}><a>预览</a></Link>)}
             <span className="sort">{item.sort}</span>
             <Link href={`/admin/document/doc?catalogId=${item._id}`}><a>查看/编写</a></Link>
           </span>

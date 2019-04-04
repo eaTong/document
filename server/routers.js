@@ -54,6 +54,7 @@ router.post('/api/doc/delete', docApi.deleteDoc);
 
 router.get('/api/pub/module/get', moduleApi.getModules);
 router.get('/api/pub/document/get', documentApi.getDocuments);
+router.get('/api/pub/document/detail', documentApi.getDocumentDetail);
 router.get('/api/pub/document/search', documentApi.search);
 router.get('/api/pub/document/detail-with-children', documentApi.detailWithChildren);
 router.get('/api/pub/doc/detail/catalog/third-party', documentApi.viewDocByThirdParty);

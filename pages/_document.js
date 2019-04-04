@@ -34,7 +34,7 @@ export default class MyDocument extends Document {
           </Head>
         ) : (
           <Head>
-            <style global dangerouslySetInnerHTML={{__html: appStyle}}/>
+            <style  dangerouslySetInnerHTML={{__html: appStyle}}/>
           </Head>
         )}
       <body>
